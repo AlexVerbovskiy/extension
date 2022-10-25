@@ -1,0 +1,15 @@
+{
+  "name": "u_ext",
+  "version": "0.0.0.1",
+  "manifest_version": 3,
+  "host_permissions": ["*://www.linkedin.com/*"],
+  "content_scripts": [{
+    "matches": ["*://www.linkedin.com/*"],
+    "js": ["js/jquery-3.6.0.min.js", "js/utils.js", "js/requests.js", "js/main.js", "js/button.js", "js/content.js", "js/storage.js"],
+    "css": ["css/button.css", "css/marker.css"]
+  }],
+  "web_accessible_resources": [{
+    "resources": ["public/heart2.ai"],
+    "matches": ["*://www.linkedin.com/*"]
+  }]
+}

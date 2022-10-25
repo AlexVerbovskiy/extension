@@ -1,0 +1,42 @@
+img.marker {
+    position: absolute;
+    right: 10%;
+    bottom: 5%;
+}
+
+.occludable-update .EntityPhoto-circle-3+img.marker,
+.EntityPhoto-square-7+img.marker,
+.EntityPhoto-circle-7+img.marker {
+    position: relative;
+}
+
+/*circle and square images on network page*/
+.EntityPhoto-square-7+img.marker,
+.EntityPhoto-circle-7+img.marker {
+    left: -10% !important;
+    top: -5% !important;
+}
+
+/*circle images on main page*/
+.occludable-update .EntityPhoto-circle-3+img.marker {
+    left: -5% !important;
+    bottom: 0% !important;
+}
+
+/*when the notification page has even images, the icon in the first image should not be displayed*/
+.ivm-image-view-model__img-list--size-4 .ivm-image-view-model__img-list-item:nth-of-type(1) img.marker {
+    display: none;
+}
+
+/*main user avatar*/
+.EntityPhoto-circle-9 img.marker {
+    bottom: 10% !important;
+    top: auto !important;
+    left: auto !important;
+    right: 10% !important;
+}
+
+/*images with this class must be lower than marker*/
+.ivm-view-attr__img-wrapper--use-img-tag img.marker {
+    z-index: 99;
+}
