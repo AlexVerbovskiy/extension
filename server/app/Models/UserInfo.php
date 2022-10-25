@@ -11,7 +11,7 @@ class UserInfo extends Model
      *
      * @var string
      */
-    protected $table = 'userInfo';
+    protected $table = 'user_info';
 
     protected $primaryKey = 'id';
 

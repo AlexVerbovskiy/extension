@@ -8,7 +8,7 @@ const markImage = (image) => {
     if (nextElement.hasClass("marker")) return;
 
     //calculate height, width and margins
-    const src = fileUrl + 'heart.png';
+    const src = fileUrl + 'heart.svg';
     const height = image.width() / 4.5;
     const width = image.width() / 4.5;
     const top = image.height() - height / 2;
@@ -25,17 +25,12 @@ const parseUserInfo = userInfo => {
     //parse info about user
     res["firstName"] = userInfo["firstName"];
     res["lastName"] = userInfo["lastName"];
-    res["id"] = userInfo["publicIdentifier"];
-
-    //saving user photos
+    //getting user id from image path
     const image = userInfo["picture"];
-    const rootUrl = image["rootUrl"];
-    res["images"] = image["artifacts"].map(elem => ({
-        size: elem["width"],
-        url: rootUrl + elem["fileIdentifyingUrlPathSegment"]
-    }));
+    const url = image["artifacts"][0]["fileIdentifyingUrlPathSegment"];
+    const splittedUrl = url.split("?")[0];
+    res["id"] = splittedUrl.split("/")[2];
     return {
         ...res
     };
 }
-

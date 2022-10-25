@@ -34,8 +34,9 @@ const deactivateUser = (id) => {
 }
 
 //all user images contained in the database of users who have installed the extension
-const getAllUrls = (success) => {
-    const url = apiURL + "all-images";
+const getAllIds = (success) => {
+    const userId = getUserId();
+    const url = apiURL + "all-images/" + userId;
 
     $.ajax({
         type: "GET",

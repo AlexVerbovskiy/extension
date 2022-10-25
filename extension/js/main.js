@@ -20,7 +20,6 @@ const getUserInfo = () => {
             data["included"].forEach(elem => {
                 //if object hasn't field name or res isn't empty - the actual element doesn't contain user data
                 if (!elem["firstName"] || getCountKeys() > 0) return;
-
                 res = parseUserInfo(elem);
             })
         } catch (e) {
@@ -32,13 +31,16 @@ const getUserInfo = () => {
 }
 
 //
-const markUsers = urls => {
+const markUsers = ids => {
     $("img:not(.marker, .marked)").each(function (index) {
         //if the urls contain the src image, that user has installed the extension
-        const src = $(this).attr('src');
-        if (!urls.includes(src)) {
-            markImage($(this));
-        }
+        const src = $(this).attr('src') || "";
+        ids.forEach(id => {
+            if (src.includes(id)) {
+                markImage($(this));
+            }
+        })
+
     })
 }
 
@@ -51,7 +53,8 @@ const onGetUsersImages = data => {
 
 //rewriting data in session and rewriting icons
 const updateAllAvatars = () => {
-    getAllUrls(data => {
+    getAllIds(data => {
+        console.log(data);
         removeMarkers();
         onGetUsersImages(data)
     });
@@ -64,7 +67,7 @@ const updateCache = () => {
         const cachedCount = getCountUsersSession();
         if (count === cachedCount) return false;
         if (count < cachedCount) updateAllAvatars();
-        if (count > cachedCount) getAllUrls(onGetUsersImages);
+        if (count > cachedCount) getAllIds(onGetUsersImages);
     })
     updateCacheTimeout = setTimeout(updateCache, 60000);
     return true;

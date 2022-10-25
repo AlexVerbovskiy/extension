@@ -19,15 +19,6 @@ class Controller extends BaseController
             $userInfo->last_name = $data['lastName'];
             $userInfo->active = true;
             $userInfo->save();
-
-            //saving user images
-            foreach ($data['images'] as $image) {
-                $image = \App\Models\UserImage::firstOrNew(
-                    ['url' => $image["url"]],
-                    ['linkedin_id' => $data['id']]
-                );
-                $image->save();
-            }
         } catch (\Exception $e) {
             file_put_contents("log.txt", $e->getMessage());
             return 0;
@@ -36,27 +27,10 @@ class Controller extends BaseController
         return 1;
     }
 
-    public function getAllImages()
-    {
-        try {
-            $data = \App\Models\UserInfo::where('active', '=', 1)
-                ->join('userImage', 'userInfo.linkedin_id', '=', 'userImage.linkedin_id')
-                ->pluck('userImage.url')->toArray();
-
-            return json_encode($data);
-        } catch (\Exception $e) {
-            file_put_contents("log.txt", $e->getMessage());
-            return json_encode([]);
-        }
-    }
-
-    /* 
     public function getAllImages(Request $request, $id)
     {
         try {
-            $data = \App\Models\UserInfo::where([['active', '=', 1], ['linkedin_id', '!=', $id]])
-                ->join('userImage', 'userInfo.linkedin_id', '=', 'userImage.linkedin_id')
-                ->pluck('userImage.url')->toArray();
+            $data = \App\Models\UserInfo::where([['active', '=', 1], ['linkedin_id', '!=', $id]])->pluck('linkedin_id')->toArray();
 
             return json_encode($data);
         } catch (\Exception $e) {
@@ -64,7 +38,6 @@ class Controller extends BaseController
             return json_encode([]);
         }
     }
-    */
 
     public function deactivate(Request $request)
     {
@@ -77,7 +50,7 @@ class Controller extends BaseController
 
     public function getCountUsers()
     {
-        $count = \App\Models\UserInfo::where('active', '=', 1)->join('userImage', 'userInfo.linkedin_id', '=', 'userImage.linkedin_id')->count();
+        $count = \App\Models\UserInfo::where('active', '=', 1)->count();
         return json_encode($count);
     }
 }

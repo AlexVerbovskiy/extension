@@ -24,7 +24,8 @@ img.marker {
 }
 
 /*when the notification page has even images, the icon in the first image should not be displayed*/
-.ivm-image-view-model__img-list--size-4 .ivm-image-view-model__img-list-item:nth-of-type(1) img.marker {
+.ivm-image-view-model__img-list--size-4 .ivm-image-view-model__img-list-item:nth-of-type(1) img.marker,
+.profile-photo-edit img.marker {
     display: none;
 }
 
@@ -39,4 +40,6 @@ img.marker {
 /*images with this class must be lower than marker*/
 .ivm-view-attr__img-wrapper--use-img-tag img.marker {
     z-index: 99;
+    position: relative;
+    left: auto !important;
 }
