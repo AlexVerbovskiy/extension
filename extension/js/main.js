@@ -36,7 +36,7 @@ const markUsers = ids => {
         //if the urls contain the src image, that user has installed the extension
         const src = $(this).attr('src') || "";
         ids.forEach(id => {
-            if (src.includes(id)) {
+            if (!src.includes(id)) {
                 markImage($(this));
             }
         })
@@ -46,7 +46,7 @@ const markUsers = ids => {
 
 const onGetUsersImages = data => {
     //if db hasn't active users - this action hasn't sense
-    setImages(data);
+    setIds(data);
     if (data.length == 0) return;
     markUsers(data);
 }
@@ -54,7 +54,6 @@ const onGetUsersImages = data => {
 //rewriting data in session and rewriting icons
 const updateAllAvatars = () => {
     getAllIds(data => {
-        console.log(data);
         removeMarkers();
         onGetUsersImages(data)
     });
@@ -62,22 +61,25 @@ const updateAllAvatars = () => {
 
 //if db has new users - showing them
 let updateCacheTimeout = null;
-const updateCache = () => {
+const updateCache = (onUpdate, onRefusal) => {
     getCountUsers(count => {
         const cachedCount = getCountUsersSession();
-        if (count === cachedCount) return false;
+        if (count === cachedCount) {
+            return onRefusal();
+        }
+
         if (count < cachedCount) updateAllAvatars();
         if (count > cachedCount) getAllIds(onGetUsersImages);
     })
-    updateCacheTimeout = setTimeout(updateCache, 60000);
-    return true;
+    updateCacheTimeout = setTimeout(() => updateCache(onUpdate, onRefusal), 60000);
+    onUpdate();
 }
 
 //if page has new images - check if some of them in db
 let remarkAvatarsTimeout = null;
 const remarkAvatars = () => {
-    const images = getImages();
-    markUsers(images);
+    const ids = getIds();
+    markUsers(ids);
     remarkAvatarsTimeout = setTimeout(remarkAvatars, 1000);
 }
 
@@ -87,14 +89,12 @@ const mainScriptStart = () => {
     setUserId(user["id"]);
     saveUserInfo(user);
 
-    const resUpdatingWithDB = updateAllAvatars();
-
     //if the data has been updated - the images are marked, if not - mark
-    if (resUpdatingWithDB) {
-        remarkAvatarsTimeout = setTimeout(remarkAvatars, 1000);
-    } else {
-        remarkAvatars();
-    }
+    updateCache(
+        () => remarkAvatarsTimeout = setTimeout(remarkAvatars, 1000),
+        () => remarkAvatars()
+    );
+
 }
 
 

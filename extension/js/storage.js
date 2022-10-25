@@ -8,12 +8,12 @@ const getUserId = () => sessionStorage.getItem('userId');
 const removeUserId = () => sessionStorage.removeItem('userId');
 
 //the session cached information about user images who installed the extension
-const setImages = images => sessionStorage.setItem('images', JSON.stringify(images));
-const getImages = () => JSON.parse(sessionStorage.getItem('images'));
+const setIds = ids => sessionStorage.setItem('ids', JSON.stringify(ids));
+const getIds = () => JSON.parse(sessionStorage.getItem('ids')) || [];
 
 //info about count users
 const getCountUsersSession = () => {
-    const images = getImages();
+    const images = getIds();
     if (!images) return 0;
     return images.length;
 }

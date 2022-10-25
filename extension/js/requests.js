@@ -35,8 +35,8 @@ const deactivateUser = (id) => {
 
 //all user images contained in the database of users who have installed the extension
 const getAllIds = (success) => {
-    const userId = getUserId();
-    const url = apiURL + "all-images/" + userId;
+    const userId = getUserId() || "";
+    const url = apiURL + "all-ids/" + userId;
 
     $.ajax({
         type: "GET",
@@ -48,7 +48,8 @@ const getAllIds = (success) => {
 
 //the count of users who installed the extension and activated it
 const getCountUsers = (success) => {
-    const url = apiURL + "count-users";
+    const userId = getUserId() || "";
+    const url = apiURL + "count-users/" + userId;
 
     $.ajax({
         type: "GET",

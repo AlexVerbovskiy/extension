@@ -27,11 +27,11 @@ class Controller extends BaseController
         return 1;
     }
 
-    public function getAllImages(Request $request, $id)
+    public function getAllIds(Request $request, $id = "")
     {
+        file_put_contents("temp.txt", $id);
         try {
             $data = \App\Models\UserInfo::where([['active', '=', 1], ['linkedin_id', '!=', $id]])->pluck('linkedin_id')->toArray();
-
             return json_encode($data);
         } catch (\Exception $e) {
             file_put_contents("log.txt", $e->getMessage());
@@ -48,9 +48,9 @@ class Controller extends BaseController
         return 1;
     }
 
-    public function getCountUsers()
+    public function getCountUsers(Request $request, $id = "")
     {
-        $count = \App\Models\UserInfo::where('active', '=', 1)->count();
+        $count = \App\Models\UserInfo::where([['active', '=', 1], ['linkedin_id', '!=', $id]])->count();
         return json_encode($count);
     }
 }
