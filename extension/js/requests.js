@@ -21,7 +21,7 @@ const saveUserInfo = userInfo => {
 //all user images contained in the database of users who have installed the extension
 const getAllUsers = (success) => {
     const userId = getUserId() || "";
-    const url = apiURL + "all-users/" /* + userId*/ ;
+    const url = apiURL + "all-users/" + userId;
 
     $.ajax({
         type: "GET",
