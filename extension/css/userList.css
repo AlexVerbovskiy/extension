@@ -5,3 +5,8 @@
 .user-element {
     cursor: pointer;
 }
+
+#user-list-elem {
+    max-height: calc(100vh - 100px - 48px - 48px);
+    overflow-y: auto;
+}

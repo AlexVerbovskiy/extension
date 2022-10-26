@@ -57,8 +57,22 @@ const userListInit = (url, firstName, lastName) => {
     const downloadUsers = () => {
         if (!canDownload) return;
 
-        const users = getUsersByStart(start, text);
+        const users = getUsersByStart()(start, text);
         users.forEach(user => $("#user-list-elem").append(userElementGenerate(user)));
+        users.forEach(user => $("#user-list-elem").append(userElementGenerate(user)));
+        users.forEach(user => $("#user-list-elem").append(userElementGenerate(user)));
+        users.forEach(user => $("#user-list-elem").append(userElementGenerate(user)));
+        users.forEach(user => $("#user-list-elem").append(userElementGenerate(user)));
+        users.forEach(user => $("#user-list-elem").append(userElementGenerate(user)));
+        users.forEach(user => $("#user-list-elem").append(userElementGenerate(user)));
+        users.forEach(user => $("#user-list-elem").append(userElementGenerate(user)));
+        users.forEach(user => $("#user-list-elem").append(userElementGenerate(user)));
+        users.forEach(user => $("#user-list-elem").append(userElementGenerate(user)));
+        users.forEach(user => $("#user-list-elem").append(userElementGenerate(user)));
+        users.forEach(user => $("#user-list-elem").append(userElementGenerate(user)));
+        users.forEach(user => $("#user-list-elem").append(userElementGenerate(user)));
+        users.forEach(user => $("#user-list-elem").append(userElementGenerate(user)));
+
         usersElementsActivate();
 
         start += users.length;
@@ -164,13 +178,23 @@ const userListInit = (url, firstName, lastName) => {
         const newPath = getPath();
         $("#user-list-icon path").attr("d", newPath);
         $("#user-list>.msg-overlay-list-bubble").removeClass("msg-overlay-list-bubble--is-minimized");
+
         if (isActive) {
             $("#user-list-header").after(searchBar, section);
             downloadUsers();
-            console.log($("#msg-overlay-list-bubble-search__search-typeahead-input"))
+
             $("#msg-overlay-list-bubble-search__search-typeahead-input").on('input', function () {
                 onChangeText($(this).val());
             });
+
+            $(function () {
+                $('#user-list-elem').on('scroll', function (e) {
+                    if ($(this).prop('scrollHeight') - $(this).prop('scrollTop') <= $(this).prop('clientHeight')) {
+                        console.log("bottom");
+                    }
+                });
+            })
+
         } else {
             $("#user-list>.msg-overlay-list-bubble").addClass("msg-overlay-list-bubble--is-minimized");
             $("#user-list-section").remove();

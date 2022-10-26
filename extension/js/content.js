@@ -11,4 +11,4 @@ const onDeactivate = () => {
 setTimeout(() => {
     console.log('hello linkedIn')
     buttonInit(onActivate, onDeactivate);
-}, 1000);
+}, 500);

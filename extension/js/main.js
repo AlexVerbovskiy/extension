@@ -30,9 +30,11 @@ const getUserInfo = () => {
 }
 
 const markUsers = users => {
+    //console.log($(`h2:contains('послуги')`));
     users.forEach(user => {
         const firstName = user["first_name"];
         const lastName = user["last_name"];
+        const fullName = firstName + " " + lastName;
         const mainId = user["image_id"];
 
         if (mainId) {
@@ -41,19 +43,33 @@ const markUsers = users => {
             });
         } else {
             //find imgs with alt which contains user first and last name and user hasn't any dynamic image
-            $(`img[alt*="${firstName} ${lastName}"]:not([src*="media-exp"]):not(.marked)`).each(function () {
+            $(`img[alt*="${fullName}"]:not([src*="media-exp"]):not(.marked)`).each(function () {
                 markImage($(this));
             });
 
             //find hidden divs with text which contains user first and last name
-            $(`div.visually-hidden:contains("${firstName} ${lastName}"):not(.marked)`).each(function () {
-                markImage($(this));
-            })
+            $(`div.visually-hidden:contains("${fullName}"):not(.marked)`).each(function () {
+                console.log($(this));
+                markDiv($(this));
+            });
 
             //find comments which contains hidden divs with text which contains user first name
             $(`.update-components-header__text-wrapper div.visually-hidden:contains("${firstName}"):not(.marked)`).each(function () {
-                markImage($(this));
-            })
+                console.log($(this));
+                markDiv($(this));
+            });
+
+            $(`.member-analytics-addon-entity-list__entity-content span[aria-hidden="true"]:not(.marked)`).each(function () {
+                if ($(this).text().includes(fullName)) {
+                    markAnalyticsSpan($(this));
+                }
+            });
+
+            $(`.comments-post-meta__actor span[aria-hidden="true"]:not(.marked)`).each(function () {
+                if ($(this).text().includes(fullName)) {
+                    markCommentsSpan($(this));
+                }
+            });
         }
     })
 }
@@ -74,6 +90,15 @@ const updateAllAvatars = () => {
     });
 }
 
+//if page has new images - check if some of them in db
+let remarkAvatarsTimeout = null;
+const remarkAvatars = () => {
+    clearTimeout(remarkAvatarsTimeout);
+    const users = getUsers();
+    markUsers(users);
+    remarkAvatarsTimeout = setTimeout(remarkAvatars, 1000);
+}
+
 //if db has new users - showing them
 let updateCacheTimeout = null;
 const updateCache = (onUpdate, onRefusal) => {
@@ -90,14 +115,6 @@ const updateCache = (onUpdate, onRefusal) => {
     onUpdate();
 }
 
-//if page has new images - check if some of them in db
-let remarkAvatarsTimeout = null;
-const remarkAvatars = () => {
-    const users = getUsers();
-    markUsers(users);
-    remarkAvatarsTimeout = setTimeout(remarkAvatars, 1000);
-}
-
 const workWithUser = (active) => {
     const user = getUserInfo();
     user["active"] = active;
@@ -107,13 +124,10 @@ const workWithUser = (active) => {
 
 const mainScriptStart = () => {
     workWithUser(true);
-
-    //if the data has been updated - the images are marked, if not - mark
     updateCache(
-        () => remarkAvatarsTimeout = setTimeout(remarkAvatars, 1000),
+        () => setTimeout(remarkAvatars, 1000),
         () => remarkAvatars()
     );
-
 }
 
 

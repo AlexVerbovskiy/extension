@@ -19,19 +19,21 @@ const getCountUsersSession = () => {
     return images.length;
 }
 
-const getUsersByStart = (start = 0, text = "") => {
+const getUsersByStart = () => {
     const users = getUsers();
-    const res = [];
-    const splittedText = text.split(" ");
+    return (start = 0, text = "") => {
+        const res = [];
+        const splittedText = text.split(" ");
 
-    let filter = user => user["first_name"].includes(text) || user["last_name"].includes(text);
-    if (splittedText.length >= 2) {
-        filter = user => user["first_name"].includes(text[0]) && user["last_name"].includes(text[1]) || user["first_name"].includes(text[1]) && user["last_name"].includes(text[0]);
+        let filter = user => user["first_name"].includes(text) || user["last_name"].includes(text);
+        if (splittedText.length >= 2) {
+            filter = user => user["first_name"].includes(text[0]) && user["last_name"].includes(text[1]) || user["first_name"].includes(text[1]) && user["last_name"].includes(text[0]);
+        }
+
+        users.forEach(user => {
+            if (filter(user)) res.push(user);
+        });
+
+        return res.slice(start, 10);
     }
-
-    users.forEach(user => {
-        if (filter(user)) res.push(user);
-    });
-
-    return res.slice(start, 10);
 }

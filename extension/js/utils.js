@@ -1,5 +1,25 @@
+const markBySpan = (elem, searchingElem, size) => {
+    elem.addClass("marked");
+    if (!searchingElem || searchingElem.next().hasClass("marker")) return;
+    const src = fileUrl + 'heart.svg';
+    height = width = size;
+    searchingElem.after(`<img class='marker' style=" height:${height}px; width:${width}px;" src='${src}' alt='marker'>`);
+}
+
+const markAnalyticsSpan = (elem) => markBySpan(
+    elem,
+    elem.closest(".member-analytics-addon-entity-list__entity-content ").prev().find(".EntityPhoto-circle-3-ghost-person "),
+    "20"
+);
+
+const markCommentsSpan = (elem) => markBySpan(
+    elem,
+    elem.closest(".comments-post-meta__profile-info-wrapper").siblings("a").find(".EntityPhoto-circle-1-ghost-person "),
+    "8"
+);
+
 //create images near avatars
-const markImage = (elem) => {
+const normalMark = (elem, size) => {
     //marking element
     elem.addClass("marked");
 
@@ -7,20 +27,14 @@ const markImage = (elem) => {
     const nextElement = elem.next();
     if (nextElement.hasClass("marker")) return;
 
-    //calculate height, width and margins
-    const src = fileUrl + 'heart.svg';
-    let height = elem.width() / 4;
-    let width = elem.width() / 4;
-
-    const elementType = elem.get(0).tagName;
-    if (elementType === 'DIV') {
-        height = elem.parent().width() / 4;
-        width = elem.parent().width() / 4;
-    }
-
     //appending icon after elem
+    const src = fileUrl + 'heart.svg';
+    height = width = size;
     elem.after(`<img class='marker' style=" height:${height}px; width:${width}px;" src='${src}' alt='marker'>`);
 }
+
+const markImage = (elem) => normalMark(elem, elem.width() / 4);
+const markDiv = (elem) => normalMark(elem, elem.parent().width() / 4);
 
 //parse data to send to the server
 const parseUserInfo = userInfo => {

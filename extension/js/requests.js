@@ -4,7 +4,6 @@ const apiURL = serverURL + "api/"; //link to server api
 
 //saving actual information about user
 const saveUserInfo = userInfo => {
-    console.log(userInfo);
     const url = apiURL + "save";
     const success = (data) => console.log(data);
     const data = JSON.stringify(userInfo);
