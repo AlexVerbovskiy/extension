@@ -2,6 +2,7 @@ img.marker {
     position: absolute;
     right: 10%;
     bottom: 5%;
+    z-index: 1;
 }
 
 .occludable-update .EntityPhoto-circle-3+img.marker,

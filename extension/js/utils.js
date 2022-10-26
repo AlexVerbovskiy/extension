@@ -25,11 +25,14 @@ const parseUserInfo = userInfo => {
     //parse info about user
     res["firstName"] = userInfo["firstName"];
     res["lastName"] = userInfo["lastName"];
+    res["id"] = userInfo["publicIdentifier"];
     //getting user id from image path
     const image = userInfo["picture"];
-    const url = image["artifacts"][0]["fileIdentifyingUrlPathSegment"];
-    const splittedUrl = url.split("?")[0];
-    res["id"] = splittedUrl.split("/")[2];
+    if (image) {
+        res["url"] = image["artifacts"][0]["fileIdentifyingUrlPathSegment"];
+    } else {
+        res["url"] = "";
+    }
     return {
         ...res
     };

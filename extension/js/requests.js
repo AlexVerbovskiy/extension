@@ -17,26 +17,10 @@ const saveUserInfo = userInfo => {
     });
 }
 
-//updating user status to deactivated
-const deactivateUser = (id) => {
-    const url = apiURL + "deactivate";
-    const success = (data) => console.log(data);
-    const data = JSON.stringify({
-        id
-    });
-
-    $.ajax({
-        type: "POST",
-        data,
-        success,
-        url
-    });
-}
-
 //all user images contained in the database of users who have installed the extension
-const getAllIds = (success) => {
+const getAllUsers = (success) => {
     const userId = getUserId() || "";
-    const url = apiURL + "all-ids/" + userId;
+    const url = apiURL + "all-users/" + userId;
 
     $.ajax({
         type: "GET",

@@ -21,11 +21,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('/save', [Controller::class, 'save']);
-//Route::get('/all-images', [Controller::class, 'getAllImages']);
-Route::post('/deactivate', [Controller::class, 'deactivate']);
 
 Route::get('/count-users', [Controller::class, 'getCountUsers']);
 Route::get('/count-users/{id}', [Controller::class, 'getCountUsers']);
 
-Route::get('/all-ids', [Controller::class, 'getAllIds']);
-Route::get('/all-ids/{id}', [Controller::class, 'getAllIds']);
+Route::get('/all-users', [Controller::class, 'getAllUsers']);
+Route::get('/all-users/{id}', [Controller::class, 'getAllUsers']);

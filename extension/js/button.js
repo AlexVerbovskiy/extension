@@ -38,6 +38,8 @@ const buttonInit = (onActivate, onDeactivate) => {
         checkbox.setAttribute("checked", true);
         label.innerText = "On";
         onActivate();
+    } else {
+        onDeactivate();
     }
 
     //appending subtitle and swapper in new section
