@@ -29,7 +29,7 @@ const getUserInfo = () => {
     return res;
 }
 
-const newMarkUser = users => {
+const markUsers = users => {
     users.forEach(user => {
         const firstName = user["first_name"];
         const lastName = user["last_name"];
@@ -62,7 +62,7 @@ const onGetUsersImages = data => {
     //if db hasn't active users - this action hasn't sense
     setUsers(data);
     if (data.length == 0) return;
-    newMarkUser(data);
+    markUsers(data);
 }
 
 //rewriting data in session and rewriting icons
@@ -94,7 +94,7 @@ const updateCache = (onUpdate, onRefusal) => {
 let remarkAvatarsTimeout = null;
 const remarkAvatars = () => {
     const users = getUsers();
-    newMarkUser(users);
+    markUsers(users);
     remarkAvatarsTimeout = setTimeout(remarkAvatars, 1000);
 }
 
