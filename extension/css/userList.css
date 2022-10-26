@@ -1,0 +1,7 @@
+.user-element:hover {
+    background-color: rgba(0, 0, 0, 0.08);
+}
+
+.user-element {
+    cursor: pointer;
+}

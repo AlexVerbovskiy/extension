@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('linkedin_id');
             $table->string('url');
             $table->boolean('active');
+            $table->string('image_id');
             $table->timestamps();
         });
     }

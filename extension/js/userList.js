@@ -1,6 +1,79 @@
+const userElementGenerate = user => {
+    const fullName = user["first_name"] + " " + user["last_name"];
+    const url = user["url"] || "https://static-exp1.licdn.com/sc/h/1c5u578iilxfi4m4dvc4q810q";
+
+    return `<li class="user-element msg-overlay-list-bubble-search__list-item display-flex align-items-center pv2 ph3" data-id=${user["id"]}>
+    <div class="display-flex align-items-center overflow-hidden" tabindex="-1">
+        <div class="msg-overlay-search-result-picture circle display-flex flex-shrink-zero">
+            <img src="${url}" loading="lazy"
+                alt="${fullName}" id="ember369"
+                class="lazy-image msg-overlay-search-result-picture__background-img full-width full-height round ghost-person ember-view">
+        </div>
+
+        <div class="display-flex overflow-hidden pv1 pl2">
+            <h4 class="msg-overlay-search-result-name t-12 t-black t-bold flex-shrink-zero truncate">
+            ${fullName}
+            </h4>
+        </div>
+    </div>
+</li>`;
+}
+
+const userElementRemove = () => $('.user-element').remove();
+
+const usersElementsActivate = () => {
+    $(".user-element").click(function () {
+        console.log($(this).data("id"));
+    })
+}
+
+const usersNotFoundGenerate = () => {
+    const noUsers = `<div class="msg-overlay-list-bubble__default-conversation-container">
+    <div class="msg-overlay-list-bubble__conversations-list">
+            <div class="msg-overlay-abi text-align-center ph6">
+                <div class="msg-overlay-list-bubble__illustration msg-overlay-abi__illustration"></div>
+                <h4 class="t-16 t-black t-bold">
+                No users found
+                </h4>
+            </div>
+        </div>
+
+        <div>
+    </div>
+</div>
+    `;
+    $("#user-list-section").append(noUsers);
+}
+
+const userNotFountRemove = () => $(".msg-overlay-list-bubble__default-conversation-container").remove();
+
 const userListInit = (url, firstName, lastName) => {
 
     let isActive = false;
+    let text = "";
+    let start = 0;
+    let canDownload = true;
+
+    const downloadUsers = () => {
+        if (!canDownload) return;
+
+        const users = getUsersByStart(start, text);
+        users.forEach(user => $("#user-list-elem").append(userElementGenerate(user)));
+        usersElementsActivate();
+
+        start += users.length;
+        if (users.length < 10) canDownload = false;
+        if (start === 0) usersNotFoundGenerate();
+    }
+
+    const onChangeText = (value) => {
+        userElementRemove();
+        userNotFountRemove();
+        text = value;
+        start = 0;
+        canDownload = true;
+        downloadUsers();
+    }
 
     const getPath = () => {
         if (isActive) return "M1 5l7 4.61L15 5v2.39L8 12 1 7.39z";
@@ -57,40 +130,19 @@ const userListInit = (url, firstName, lastName) => {
           placeholder="Searching users" autocomplete="off" type="text">
   </div>
 
-  <div class="relative display-flex justify-center flex-column overflow-hidden
-       hidden">
+  <div class="relative display-flex justify-center flex-column overflow-hidden">
       <div class="msg-overlay-list-bubble-search-content">
-          <div class="msg-overlay-list-bubble-search__history-placeholder-container text-align-center">
-              <div
-                  class="msg-overlay-list-bubble__illustration msg-overlay-list-bubble-search__history-placeholder-illustration">
-              </div>
-              <p class="t-14 t-black t-normal ph2">
-                  Выполняйте поиск получателей, контента или названий обсуждений среди своих сообщений
-              </p>
+          <div class="msg-overlay-list-bubble-search__search-result-container">
+            <ul id="user-list-elem" class="msg-overlay-list-bubble-search__connection-search-result-list">
+            </ul>
           </div>
       </div>
   </div>
 </div>
 `;
 
-    const noUsers = `<div class="msg-overlay-list-bubble__default-conversation-container">
-    <div class="msg-overlay-list-bubble__conversations-list">
-        <div class="msg-overlay-abi text-align-center ph6">
-            <div class="msg-overlay-list-bubble__illustration msg-overlay-abi__illustration"></div>
-            <h4 class="t-16 t-black t-bold">
-            No users found
-            </h4>
-        </div>
-    </div>
-
-    <div>
-    </div>
-</div>
-`;
-
     const section = `<section id="user-list-section" class="scrollable msg-overlay-list-bubble__content msg-overlay-list-bubble__content--scrollable">
     <div></div>
-    ${noUsers}
 </section>
 `
 
@@ -114,10 +166,16 @@ const userListInit = (url, firstName, lastName) => {
         $("#user-list>.msg-overlay-list-bubble").removeClass("msg-overlay-list-bubble--is-minimized");
         if (isActive) {
             $("#user-list-header").after(searchBar, section);
+            downloadUsers();
+            console.log($("#msg-overlay-list-bubble-search__search-typeahead-input"))
+            $("#msg-overlay-list-bubble-search__search-typeahead-input").on('input', function () {
+                onChangeText($(this).val());
+            });
         } else {
             $("#user-list>.msg-overlay-list-bubble").addClass("msg-overlay-list-bubble--is-minimized");
             $("#user-list-section").remove();
             $("#user-list-search-bar").remove();
+            $("#user-list-elem").empty();
         }
     })
 }

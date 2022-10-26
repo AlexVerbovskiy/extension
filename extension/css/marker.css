@@ -3,44 +3,89 @@ img.marker {
     right: 10%;
     bottom: 5%;
     z-index: 1;
+    background-color: transparent !important;
 }
 
-.occludable-update .EntityPhoto-circle-3+img.marker,
-.EntityPhoto-square-7+img.marker,
-.EntityPhoto-circle-7+img.marker {
+.presence-entity.presence-entity--size-4 img.marker {
+    right: 0;
+    bottom: 0;
+}
+
+.pv-top-card__photo.presence-entity__image.EntityPhoto-circle-9 {
+    position: static;
+}
+
+.pv-top-card__photo.presence-entity__image.EntityPhoto-circle-9 img.marker {
+    position: absolute;
+    right: 1.6rem;
+    bottom: 0;
+}
+
+.ivm-view-attr__img-wrapper.ivm-view-attr__img-wrapper--use-img-tag {
     position: relative;
 }
 
-/*circle and square images on network page*/
-.EntityPhoto-square-7+img.marker,
-.EntityPhoto-circle-7+img.marker {
-    left: -10% !important;
-    top: -5% !important;
+.ivm-view-attr__img-wrapper.ivm-view-attr__img-wrapper--use-img-tag img.marker {
+    right: 0;
+    bottom: 0;
 }
 
-/*circle images on main page*/
-.occludable-update .EntityPhoto-circle-3+img.marker {
-    left: -5% !important;
-    bottom: 0% !important;
-}
-
-/*when the notification page has even images, the icon in the first image should not be displayed*/
-.ivm-image-view-model__img-list--size-4 .ivm-image-view-model__img-list-item:nth-of-type(1) img.marker,
-.profile-photo-edit img.marker {
-    display: none;
-}
-
-/*main user avatar*/
-.EntityPhoto-circle-9 img.marker {
-    bottom: 10% !important;
-    top: auto !important;
-    left: auto !important;
-    right: 10% !important;
-}
-
-/*images with this class must be lower than marker*/
-.ivm-view-attr__img-wrapper--use-img-tag img.marker {
-    z-index: 99;
+.discover-entity-type-card__info-container .ember-view.discover-entity-type-card__link img.marker,
+.discover-entity-type-card__info-container--no-insights img.marker {
+    bottom: 0;
+    left: -3rem;
     position: relative;
-    left: auto !important;
+}
+
+.discover-person-follow-card__info-container img.marker {
+    bottom: 0;
+    left: -2rem;
+    position: relative;
+}
+
+.feed-shared-avatar-image {
+    position: relative;
+}
+
+.feed-follows-module-recommendation .ember-view.feed-follows-module-recommendation__profile-link--avatar {
+    position: relative;
+}
+
+.t-black--light.display-flex.t-12.hoverable-link-text {
+    position: relative;
+}
+
+.t-black--light.display-flex.t-12.hoverable-link-text img.marker {
+    left: 12px;
+}
+
+button.entity-hovercard__a11y-trigger {
+    overflow: auto !important;
+}
+
+.align-items-center.link-without-hover-visited.justify-flex-start.text-body-medium {
+    position: relative;
+}
+
+.align-items-center.link-without-hover-visited.justify-flex-start.text-body-medium img.marker {
+    left: 30px;
+}
+
+.msg-s-event-listitem__seen-receipts img.marker {
+    right: 0.8rem;
+    bottom: 0;
+}
+
+.profile-rail-card__member-photo {
+    position: relative;
+}
+
+.user-element .msg-overlay-search-result-picture {
+    position: relative;
+}
+
+@media screen and (min-width: 768px) and (max-width: 992px) {
+    .pv-top-card__photo.presence-entity__image.EntityPhoto-circle-9 img.marker {
+        right: 4.8rem;
+    }
 }

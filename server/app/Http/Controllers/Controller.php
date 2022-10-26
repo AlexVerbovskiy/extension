@@ -19,6 +19,7 @@ class Controller extends BaseController
             $userInfo->last_name = $data['lastName'];
             $userInfo->url = $data['url'];
             $userInfo->active = $data['active'];
+            $userInfo->image_id = $data['image_id'];
             $userInfo->save();
         } catch (\Exception $e) {
             file_put_contents("log.txt", $e->getMessage());
@@ -31,7 +32,7 @@ class Controller extends BaseController
     public function getAllUsers(Request $request, $id = "")
     {
         try {
-            $data = \App\Models\UserInfo::where([['active', '=', 1], ['linkedin_id', '!=', $id]])->get(['first_name', 'last_name']);
+            $data = \App\Models\UserInfo::where([['active', '=', 1], ['linkedin_id', '!=', $id]])->get();
             return json_encode($data);
         } catch (\Exception $e) {
             file_put_contents("log.txt", $e->getMessage());

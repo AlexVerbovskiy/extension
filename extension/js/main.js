@@ -29,17 +29,32 @@ const getUserInfo = () => {
     return res;
 }
 
-//
-const markUsers = users => {
-    $("img:not(.marker, .marked)").each(function (index) {
-        //if the urls contain the src image, that user has installed the extension
-        const src = $(this).attr('alt') || "";
-        users.forEach(user => {
-            if (src.includes(user["first_name"]) && src.includes(user["last_name"])) {
-                markImage($(this));
-            }
-        })
+const newMarkUser = users => {
+    users.forEach(user => {
+        const firstName = user["first_name"];
+        const lastName = user["last_name"];
+        const mainId = user["image_id"];
 
+        if (mainId) {
+            $(`img[src*="${mainId}"]:not(.marked)`).each(function () {
+                markImage($(this));
+            });
+        } else {
+            //find imgs with alt which contains user first and last name and user hasn't any dynamic image
+            $(`img[alt*="${firstName} ${lastName}"]:not([src*="media-exp"]):not(.marked)`).each(function () {
+                markImage($(this));
+            });
+
+            //find hidden divs with text which contains user first and last name
+            $(`div.visually-hidden:contains("${firstName} ${lastName}"):not(.marked)`).each(function () {
+                markImage($(this));
+            })
+
+            //find comments which contains hidden divs with text which contains user first name
+            $(`.update-components-header__text-wrapper div.visually-hidden:contains("${firstName}"):not(.marked)`).each(function () {
+                markImage($(this));
+            })
+        }
     })
 }
 
@@ -47,12 +62,13 @@ const onGetUsersImages = data => {
     //if db hasn't active users - this action hasn't sense
     setUsers(data);
     if (data.length == 0) return;
-    markUsers(data);
+    newMarkUser(data);
 }
 
 //rewriting data in session and rewriting icons
 const updateAllAvatars = () => {
     getAllUsers(data => {
+        console.log(data);
         removeMarkers();
         onGetUsersImages(data)
     });
@@ -78,7 +94,7 @@ const updateCache = (onUpdate, onRefusal) => {
 let remarkAvatarsTimeout = null;
 const remarkAvatars = () => {
     const users = getUsers();
-    markUsers(users);
+    newMarkUser(users);
     remarkAvatarsTimeout = setTimeout(remarkAvatars, 1000);
 }
 

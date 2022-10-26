@@ -1,21 +1,25 @@
 //create images near avatars
-const markImage = (image) => {
+const markImage = (elem) => {
     //marking element
-    image.addClass("marked");
+    elem.addClass("marked");
 
     //if the next element has a class marker, that element was marked in the past
-    const nextElement = image.next();
+    const nextElement = elem.next();
     if (nextElement.hasClass("marker")) return;
 
     //calculate height, width and margins
     const src = fileUrl + 'heart.svg';
-    const height = image.width() / 4.5;
-    const width = image.width() / 4.5;
-    const top = image.height() - height / 2;
-    const left = image.width() - width / 2;
+    let height = elem.width() / 4;
+    let width = elem.width() / 4;
 
-    //appending icon after image
-    image.after(`<img class='marker' style="left:${left}px; top:${top}px; height:${height}px; width:${width}px;" src='${src}' alt='marker'>`);
+    const elementType = elem.get(0).tagName;
+    if (elementType === 'DIV') {
+        height = elem.parent().width() / 4;
+        width = elem.parent().width() / 4;
+    }
+
+    //appending icon after elem
+    elem.after(`<img class='marker' style=" height:${height}px; width:${width}px;" src='${src}' alt='marker'>`);
 }
 
 //parse data to send to the server
@@ -29,9 +33,12 @@ const parseUserInfo = userInfo => {
     //getting user id from image path
     const image = userInfo["picture"];
     if (image) {
-        res["url"] = image["artifacts"][0]["fileIdentifyingUrlPathSegment"];
+        const partUrl = image["artifacts"][0]["fileIdentifyingUrlPathSegment"];
+        res["url"] = image["rootUrl"] + partUrl;
+        const splittedPart = partUrl.split("?")[0];
+        res["image_id"] = splittedPart.split("/")[2];
     } else {
-        res["url"] = "";
+        res["url"] = res["image_id"] = "";
     }
     return {
         ...res

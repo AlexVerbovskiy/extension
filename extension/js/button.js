@@ -46,6 +46,5 @@ const buttonInit = (onActivate, onDeactivate) => {
     li.append(swapper, label);
 
     //appending section to header end 
-    const lastLi = $('.global-nav__primary-item').last();
-    lastLi.after(li);
+    $('.global-nav__primary-items').append(li);
 }
