@@ -93,3 +93,8 @@ button.entity-hovercard__a11y-trigger {
         right: 4.8rem;
     }
 }
+
+/*
+.marker+.presence-entity__indicator {
+    display: none;
+}*/
