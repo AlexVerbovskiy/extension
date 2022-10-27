@@ -99,6 +99,7 @@ const remarkAvatars = () => {
 let updateCacheTimeout = null;
 const updateCache = (onUpdate, onRefusal) => {
     getCountUsers(count => {
+        console.log(count);
         const cachedCount = getCountUsersSession();
         if (count === cachedCount) {
             return onRefusal();
