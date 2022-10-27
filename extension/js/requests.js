@@ -1,7 +1,3 @@
-const serverURL = "http://127.0.0.1:8000/"; //link to server
-const fileUrl = serverURL + "storage/"; //link to server files
-const apiURL = serverURL + "api/"; //link to server api
-
 const callbacks = [];
 
 const sendRequest = (data, success) => {

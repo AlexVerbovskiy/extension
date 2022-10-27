@@ -10,10 +10,7 @@ const removeCachedUser = () => sessionStorage.removeItem('cachedUser');
 const getUserId = () => getCachedUser()?.id;
 
 //the session cached information about user images who installed the extension
-const setUsers = users => {
-    console.log(users);
-    sessionStorage.setItem('users', JSON.stringify(users));
-}
+const setUsers = users => sessionStorage.setItem('users', JSON.stringify(users));
 const getUsers = () => JSON.parse(sessionStorage.getItem('users')) || [];
 const removeUsers = () => sessionStorage.removeItem('users');
 

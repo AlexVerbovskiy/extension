@@ -148,7 +148,7 @@ const userListInit = (params) => {
                 downloadUsers();
             }
             startTimeout();
-        }, 5000)
+        }, listUsersUpdateTime)
     }
 
 
@@ -161,7 +161,7 @@ const userListInit = (params) => {
 
     const downloadUsers = () => {
         if (!canDownload) return;
-        
+
         if (start == 0) userNotFountRemove();
 
         const users = filterUsers(cachedUsers, start, text);

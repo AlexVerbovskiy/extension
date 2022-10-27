@@ -1,9 +1,13 @@
+const appendIconAfter = (size, elem) => {
+    const src = iconSrc;
+    height = width = size;
+    elem.after(`<img class='marker' style=" height:${height}px; width:${width}px;" src='${src}' alt='marker'>`);
+}
+
 const markBySpan = (elem, searchingElem, size) => {
     elem.addClass("marked");
     if (!searchingElem || searchingElem.next().hasClass("marker")) return;
-    const src = fileUrl + 'heart.svg';
-    height = width = size;
-    searchingElem.after(`<img class='marker' style=" height:${height}px; width:${width}px;" src='${src}' alt='marker'>`);
+    appendIconAfter(size, searchingElem);
 }
 
 const markAnalyticsSpan = (elem) => {
@@ -36,9 +40,7 @@ const normalMark = (elem, size) => {
     if (nextElement.hasClass("marker")) return;
 
     //appending icon after elem
-    const src = fileUrl + 'heart.svg';
-    height = width = size;
-    elem.after(`<img class='marker' style=" height:${height}px; width:${width}px;" src='${src}' alt='marker'>`);
+    appendIconAfter(size, elem);
 }
 
 const markImage = (elem) => normalMark(elem, elem.width() / 4);

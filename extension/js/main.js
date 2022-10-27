@@ -92,14 +92,13 @@ const remarkAvatars = () => {
     clearTimeout(remarkAvatarsTimeout);
     const users = getUsers();
     markUsers(users);
-    remarkAvatarsTimeout = setTimeout(remarkAvatars, 1000);
+    remarkAvatarsTimeout = setTimeout(remarkAvatars, remarkAvatarsTime);
 }
 
 //if db has new users - showing them
 let updateCacheTimeout = null;
 const updateCache = (onUpdate, onRefusal) => {
     getCountUsers(count => {
-        console.log(count);
         const cachedCount = getCountUsersSession();
         if (count === cachedCount) {
             return onRefusal();
@@ -108,7 +107,7 @@ const updateCache = (onUpdate, onRefusal) => {
         if (count < cachedCount) updateAllAvatars();
         if (count > cachedCount) getAllUsers(onGetUsersImages);
     })
-    updateCacheTimeout = setTimeout(() => updateCache(onUpdate, onRefusal), 60000);
+    updateCacheTimeout = setTimeout(() => updateCache(onUpdate, onRefusal), updateCacheTime);
     onUpdate();
 }
 
@@ -124,7 +123,7 @@ const workWithUser = (active) => {
 const mainScriptStart = () => {
     workWithUser(true);
     updateCache(
-        () => setTimeout(remarkAvatars, 1000),
+        () => setTimeout(remarkAvatars, remarkAvatarsTime),
         () => remarkAvatars()
     );
 }

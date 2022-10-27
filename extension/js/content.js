@@ -1,7 +1,7 @@
 const onActivate = () => {
     mainScriptStart();
     const user = getCachedUser();
-    const url = user["image"] || "https://static-exp1.licdn.com/sc/h/1c5u578iilxfi4m4dvc4q810q";
+    const url = user["image"] || defaultUserImg;
     const params = {
         firstName: user["firstName"],
         lastName: user["lastName"],
