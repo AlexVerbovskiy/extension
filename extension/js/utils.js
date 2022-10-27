@@ -71,12 +71,17 @@ const parseUserInfo = userInfo => {
 
 
 const filterUsers = (users, start = 0, text = "") => {
+    text = text.toLowerCase();
     const res = [];
     const splittedText = text.split(" ");
+    console.log(splittedText)
 
-    let filter = user => user["first_name"].includes(text) || user["last_name"].includes(text);
+    let filter = user => user["first_name"].toLowerCase().includes(text) || user["last_name"].toLowerCase().includes(text);
+
     if (splittedText.length >= 2) {
-        filter = user => user["first_name"].includes(text[0]) && user["last_name"].includes(text[1]) || user["first_name"].includes(text[1]) && user["last_name"].includes(text[0]);
+        console.log("two");
+        filter = user => ((user["first_name"].toLowerCase().includes(splittedText[0]) && user["last_name"].toLowerCase().includes(splittedText[1])) ||
+            (user["first_name"].toLowerCase().includes(splittedText[1]) && user["last_name"].toLowerCase().includes(splittedText[0])))
     }
 
     users.forEach(user => {

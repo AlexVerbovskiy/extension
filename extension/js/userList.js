@@ -45,7 +45,7 @@ const usersNotFoundGenerate = () => {
     $("#user-list-section").append(noUsers);
 }
 
-const userNotFountRemove = () => $(".msg-overlay-list-bubble__default-conversation-container").remove();
+const userNotFountRemove = () => $("#user-list .msg-overlay-list-bubble__default-conversation-container").remove();
 
 const getHeaderHtml = ({
     url,

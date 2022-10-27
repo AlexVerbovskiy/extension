@@ -69,4 +69,5 @@ input:checked+.slider:before {
 
 #extension-li .global-nav__primary-link-text {
     margin-top: -4px;
+    font-size: 13px;
 }

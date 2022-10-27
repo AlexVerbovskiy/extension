@@ -84,6 +84,10 @@ button.entity-hovercard__a11y-trigger {
     position: relative;
 }
 
+.msg-overlay-search-result-picture {
+    position: relative;
+}
+
 @media screen and (min-width: 768px) and (max-width: 992px) {
     .pv-top-card__photo.presence-entity__image.EntityPhoto-circle-9 img.marker {
         right: 4.8rem;
