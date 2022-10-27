@@ -1,8 +1,8 @@
 const userElementGenerate = user => {
     const fullName = user["first_name"] + " " + user["last_name"];
-    const url = user["url"] || "https://static-exp1.licdn.com/sc/h/1c5u578iilxfi4m4dvc4q810q";
+    const url = user["image"] || "https://static-exp1.licdn.com/sc/h/1c5u578iilxfi4m4dvc4q810q";
 
-    return `<li class="user-element msg-overlay-list-bubble-search__list-item display-flex align-items-center pv2 ph3" data-id=${user["id"]}>
+    return `<li class="user-element msg-overlay-list-bubble-search__list-item display-flex align-items-center pv2 ph3" data-id=${user["urn"]}>
     <div class="display-flex align-items-center overflow-hidden" tabindex="-1">
         <div class="msg-overlay-search-result-picture circle display-flex flex-shrink-zero">
             <img src="${url}" loading="lazy"
@@ -23,7 +23,7 @@ const userElementRemove = () => $('.user-element').remove();
 
 const usersElementsActivate = () => {
     $(".user-element").click(function () {
-        console.log($(this).data("id"));
+        window.location = "/in/" + $(this).data("id");
     })
 }
 
@@ -47,54 +47,11 @@ const usersNotFoundGenerate = () => {
 
 const userNotFountRemove = () => $(".msg-overlay-list-bubble__default-conversation-container").remove();
 
-const userListInit = (url, firstName, lastName) => {
-
-    let isActive = false;
-    let text = "";
-    let start = 0;
-    let canDownload = true;
-
-    const downloadUsers = () => {
-        if (!canDownload) return;
-
-        const users = getUsersByStart()(start, text);
-        users.forEach(user => $("#user-list-elem").append(userElementGenerate(user)));
-        users.forEach(user => $("#user-list-elem").append(userElementGenerate(user)));
-        users.forEach(user => $("#user-list-elem").append(userElementGenerate(user)));
-        users.forEach(user => $("#user-list-elem").append(userElementGenerate(user)));
-        users.forEach(user => $("#user-list-elem").append(userElementGenerate(user)));
-        users.forEach(user => $("#user-list-elem").append(userElementGenerate(user)));
-        users.forEach(user => $("#user-list-elem").append(userElementGenerate(user)));
-        users.forEach(user => $("#user-list-elem").append(userElementGenerate(user)));
-        users.forEach(user => $("#user-list-elem").append(userElementGenerate(user)));
-        users.forEach(user => $("#user-list-elem").append(userElementGenerate(user)));
-        users.forEach(user => $("#user-list-elem").append(userElementGenerate(user)));
-        users.forEach(user => $("#user-list-elem").append(userElementGenerate(user)));
-        users.forEach(user => $("#user-list-elem").append(userElementGenerate(user)));
-        users.forEach(user => $("#user-list-elem").append(userElementGenerate(user)));
-
-        usersElementsActivate();
-
-        start += users.length;
-        if (users.length < 10) canDownload = false;
-        if (start === 0) usersNotFoundGenerate();
-    }
-
-    const onChangeText = (value) => {
-        userElementRemove();
-        userNotFountRemove();
-        text = value;
-        start = 0;
-        canDownload = true;
-        downloadUsers();
-    }
-
-    const getPath = () => {
-        if (isActive) return "M1 5l7 4.61L15 5v2.39L8 12 1 7.39z";
-        return "M15 11L8 6.39 1 11V8.61L8 4l7 4.61z";
-    }
-
-    const header = `<header id="user-list-header" class="msg-overlay-bubble-header">
+const getHeaderHtml = ({
+    url,
+    firstName,
+    lastName
+}, getPath) => `<header id="user-list-header" class="msg-overlay-bubble-header">
     <div class="msg-overlay-bubble-header__badge-container"></div>
   
     <div class="msg-overlay-bubble-header__details flex-row align-items-center ml1">
@@ -126,7 +83,7 @@ const userListInit = (url, firstName, lastName) => {
 </header>
 `;
 
-    const searchBar = `<div id="user-list-search-bar" class="msg-overlay-list-bubble-search
+const searchBar = `<div id="user-list-search-bar" class="msg-overlay-list-bubble-search
     ">
   <div class="msg-overlay-list-bubble-search__input-container">
       <label class="a11y-text" for="msg-overlay-list-bubble-search__search-typeahead-input">
@@ -155,15 +112,15 @@ const userListInit = (url, firstName, lastName) => {
 </div>
 `;
 
-    const section = `<section id="user-list-section" class="scrollable msg-overlay-list-bubble__content msg-overlay-list-bubble__content--scrollable">
+const section = `<section id="user-list-section" class="scrollable msg-overlay-list-bubble__content msg-overlay-list-bubble__content--scrollable">
     <div></div>
 </section>
 `
 
-    const userBlock = `<aside id="user-list" class="msg-overlay-container msg-overlay-container-reflow" style="
+const getListBlockHtml = (params, getPath) => `<aside id="user-list" class="msg-overlay-container msg-overlay-container-reflow" style="
     left: 0; right:auto;">
     <div tabindex="-1" class="msg-overlay-list-bubble  msg-overlay-list-bubble--is-minimized ml4">
-        ${header}
+        ${getHeaderHtml(params, getPath)}
     </div>
 
     <div id="msg-overlay__emoji-hoverable-outlet"></div>
@@ -171,7 +128,64 @@ const userListInit = (url, firstName, lastName) => {
     <div id="msg-overlay__reactor-list-outlet"></div>
 </aside>
 `;
-    $(".artdeco-toasts").append(userBlock);
+
+const userListInit = (params) => {
+
+    let isActive = false;
+    let text, start, canDownload, cachedUsers;
+
+    let updateUsersTimeout = null;
+    const stopTimeout = () => clearTimeout(updateUsersTimeout);
+
+    const startTimeout = () => {
+        updateUsersTimeout = setTimeout(() => {
+            const newUsers = getUsers();
+            if (cachedUsers.length !== newUsers.length) {
+                const temp = text;
+                stateReset();
+                text = temp;
+                userElementRemove();
+                downloadUsers();
+            }
+            startTimeout();
+        }, 5000)
+    }
+
+
+    const stateReset = () => {
+        text = "";
+        start = 0;
+        canDownload = true;
+        cachedUsers = getUsers();
+    }
+
+    const downloadUsers = () => {
+        if (!canDownload) return;
+
+        const users = filterUsers(cachedUsers, start, text);
+        users.forEach(user => $("#user-list-elem").append(userElementGenerate(user)));
+        usersElementsActivate();
+
+        start += users.length;
+        if (users.length < 10) canDownload = false;
+        if (start === 0) usersNotFoundGenerate();
+    }
+
+    const onChangeText = (value) => {
+        userElementRemove();
+        userNotFountRemove();
+        text = value;
+        start = 0;
+        canDownload = true;
+        downloadUsers();
+    }
+
+    const getPath = () => {
+        if (isActive) return "M1 5l7 4.61L15 5v2.39L8 12 1 7.39z";
+        return "M15 11L8 6.39 1 11V8.61L8 4l7 4.61z";
+    }
+
+    $(".artdeco-toasts").append(getListBlockHtml(params, getPath));
 
     $("#user-list-header").click(function () {
         isActive = !isActive;
@@ -180,7 +194,9 @@ const userListInit = (url, firstName, lastName) => {
         $("#user-list>.msg-overlay-list-bubble").removeClass("msg-overlay-list-bubble--is-minimized");
 
         if (isActive) {
+            stateReset();
             $("#user-list-header").after(searchBar, section);
+            startTimeout();
             downloadUsers();
 
             $("#msg-overlay-list-bubble-search__search-typeahead-input").on('input', function () {
@@ -189,8 +205,18 @@ const userListInit = (url, firstName, lastName) => {
 
             $(function () {
                 $('#user-list-elem').on('scroll', function (e) {
-                    if ($(this).prop('scrollHeight') - $(this).prop('scrollTop') <= $(this).prop('clientHeight')) {
-                        console.log("bottom");
+                    const scrollHeight = $(this).prop('scrollHeight');
+                    const scrollTop = $(this).prop('scrollTop');
+                    const clientHeight = $(this).prop('clientHeight');
+
+                    if (scrollHeight - scrollTop <= clientHeight) {
+                        downloadUsers();
+                    }
+
+                    if (scrollTop === 0) {
+                        startTimeout();
+                    } else {
+                        stopTimeout();
                     }
                 });
             })

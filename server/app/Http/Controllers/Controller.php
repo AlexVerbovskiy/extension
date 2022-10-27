@@ -17,8 +17,9 @@ class Controller extends BaseController
             $userInfo = \App\Models\UserInfo::firstOrNew(['linkedin_id' => $data['id']]);
             $userInfo->first_name = $data['firstName'];
             $userInfo->last_name = $data['lastName'];
-            $userInfo->url = $data['url'];
+            $userInfo->urn = $data['urn'];
             $userInfo->active = $data['active'];
+            $userInfo->image = $data['image'];
             $userInfo->image_id = $data['image_id'];
             $userInfo->save();
         } catch (\Exception $e) {

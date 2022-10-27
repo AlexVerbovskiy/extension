@@ -1,6 +1,5 @@
 /node_modules
 /public/build
-/public/log.txt
 /public/hot
 /public/storage
 /storage/*.key

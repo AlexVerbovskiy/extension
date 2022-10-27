@@ -18,8 +18,9 @@ return new class extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->string('linkedin_id');
-            $table->string('url');
+            $table->string('image');
             $table->boolean('active');
+            $table->string('urn');
             $table->string('image_id');
             $table->timestamps();
         });

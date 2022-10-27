@@ -6,11 +6,19 @@ const markBySpan = (elem, searchingElem, size) => {
     searchingElem.after(`<img class='marker' style=" height:${height}px; width:${width}px;" src='${src}' alt='marker'>`);
 }
 
-const markAnalyticsSpan = (elem) => markBySpan(
-    elem,
-    elem.closest(".member-analytics-addon-entity-list__entity-content ").prev().find(".EntityPhoto-circle-3-ghost-person "),
-    "20"
-);
+const markAnalyticsSpan = (elem) => {
+    markBySpan(
+        elem,
+        elem.closest(".member-analytics-addon-entity-list__entity-content ").prev().find(".EntityPhoto-circle-3-ghost-person "),
+        "20"
+    );
+
+    markBySpan(
+        elem,
+        elem.closest(".member-analytics-addon-entity-list__entity-content ").prev().find("img"),
+        "20"
+    );
+}
 
 const markCommentsSpan = (elem) => markBySpan(
     elem,
@@ -44,17 +52,36 @@ const parseUserInfo = userInfo => {
     res["firstName"] = userInfo["firstName"];
     res["lastName"] = userInfo["lastName"];
     res["id"] = userInfo["publicIdentifier"];
+    res["urn"] = userInfo["entityUrn"].split(':')[3];
     //getting user id from image path
     const image = userInfo["picture"];
     if (image) {
         const partUrl = image["artifacts"][0]["fileIdentifyingUrlPathSegment"];
-        res["url"] = image["rootUrl"] + partUrl;
+        res["image"] = image["rootUrl"] + partUrl;
         const splittedPart = partUrl.split("?")[0];
         res["image_id"] = splittedPart.split("/")[2];
     } else {
-        res["url"] = res["image_id"] = "";
+        res["image"] = res["image_id"] = "";
     }
+
     return {
         ...res
     };
+}
+
+
+const filterUsers = (users, start = 0, text = "") => {
+    const res = [];
+    const splittedText = text.split(" ");
+
+    let filter = user => user["first_name"].includes(text) || user["last_name"].includes(text);
+    if (splittedText.length >= 2) {
+        filter = user => user["first_name"].includes(text[0]) && user["last_name"].includes(text[1]) || user["first_name"].includes(text[1]) && user["last_name"].includes(text[0]);
+    }
+
+    users.forEach(user => {
+        if (filter(user)) res.push(user);
+    });
+
+    return res.slice(start, start + 10);
 }

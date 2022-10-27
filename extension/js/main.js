@@ -30,47 +30,44 @@ const getUserInfo = () => {
 }
 
 const markUsers = users => {
-    //console.log($(`h2:contains('послуги')`));
-    users.forEach(user => {
-        const firstName = user["first_name"];
-        const lastName = user["last_name"];
-        const fullName = firstName + " " + lastName;
-        const mainId = user["image_id"];
 
+    users.forEach(user => {
+
+        const mainId = user["image_id"];
         if (mainId) {
             $(`img[src*="${mainId}"]:not(.marked)`).each(function () {
                 markImage($(this));
             });
-        } else {
-            //find imgs with alt which contains user first and last name and user hasn't any dynamic image
-            $(`img[alt*="${fullName}"]:not([src*="media-exp"]):not(.marked)`).each(function () {
-                markImage($(this));
-            });
-
-            //find hidden divs with text which contains user first and last name
-            $(`div.visually-hidden:contains("${fullName}"):not(.marked)`).each(function () {
-                console.log($(this));
-                markDiv($(this));
-            });
-
-            //find comments which contains hidden divs with text which contains user first name
-            $(`.update-components-header__text-wrapper div.visually-hidden:contains("${firstName}"):not(.marked)`).each(function () {
-                console.log($(this));
-                markDiv($(this));
-            });
-
-            $(`.member-analytics-addon-entity-list__entity-content span[aria-hidden="true"]:not(.marked)`).each(function () {
-                if ($(this).text().includes(fullName)) {
-                    markAnalyticsSpan($(this));
-                }
-            });
-
-            $(`.comments-post-meta__actor span[aria-hidden="true"]:not(.marked)`).each(function () {
-                if ($(this).text().includes(fullName)) {
-                    markCommentsSpan($(this));
-                }
-            });
+            return;
         }
+
+        const partId = user["linkedin_id"].split("-")[2];
+        const urn = user["urn"];
+        const fullName = user["first_name"] + " " + user["last_name"];
+
+        $(`.pv-top-card-profile-picture img[alt*="${fullName}"]:not(.marked),
+            a[href*="${partId}"] img[alt*="${fullName}"]:not(.marked),
+            a[href*="${urn}"] img[alt*="${fullName}"]:not(.marked),
+            .msg-overlay-conversation-bubble img[alt*="${fullName}"]:not(.marked),
+            .msg-overlay-container img[alt*="${fullName}"]:not(.marked),
+            .msg-s-event-listitem__seen-receipts img[alt*="${fullName}"]:not(.marked)
+        `).each(function () {
+            markImage($(this));
+        });
+
+        $(`a[href*=${urn}] EntityPhoto-circle-2-ghost-person:not(.marked),
+            a[href*=${urn}] .EntityPhoto-circle-1-ghost-person:not(.marked),
+            a[href*=${urn}] .EntityPhoto-circle-5-ghost-person .visually-hidden:not(.marked),
+            a[href*=${partId}] .EntityPhoto-circle-4-ghost-person .visually-hidden:not(.marked),
+            a[href*=${urn}] .EntityPhoto-circle-3-ghost-person .visually-hidden:not(.marked),
+            a[href*=${urn}] .EntityPhoto-circle-0-ghost-person .visually-hidden:not(.marked)
+        `).each(function () {
+            markDiv($(this));
+        });
+
+        $(`.member-analytics-addon-entity-list__entity-content span[aria-hidden="true"]:contains("${fullName}"):not(.marked)`).each(function () {
+            markAnalyticsSpan($(this));
+        });
     })
 }
 
@@ -84,7 +81,6 @@ const onGetUsersImages = data => {
 //rewriting data in session and rewriting icons
 const updateAllAvatars = () => {
     getAllUsers(data => {
-        console.log(data);
         removeMarkers();
         onGetUsersImages(data)
     });
@@ -118,10 +114,12 @@ const updateCache = (onUpdate, onRefusal) => {
 const workWithUser = (active) => {
     const user = getUserInfo();
     user["active"] = active;
-    setUserId(user["id"]);
+    cacheUser(user);
     saveUserInfo(user);
 }
 
+//if user in session we must save info about him after showing icons
+//if user isn't in session we must parse info and show icons after it
 const mainScriptStart = () => {
     workWithUser(true);
     updateCache(
@@ -135,8 +133,5 @@ const mainScriptEnd = () => {
     clearTimeout(updateCacheTimeout);
     clearInterval(remarkAvatarsTimeout);
     removeMarkers();
-
     workWithUser(false);
-    removeUserId();
-    removeUsers();
 }

@@ -1,14 +1,26 @@
 const onActivate = () => {
     mainScriptStart();
-    //userListInit("https://static-exp1.licdn.com/sc/h/1c5u578iilxfi4m4dvc4q810q", "", "");
+    const user = getCachedUser();
+    const url = user["image"] || "https://static-exp1.licdn.com/sc/h/1c5u578iilxfi4m4dvc4q810q";
+    const params = {
+        firstName: user["firstName"],
+        lastName: user["lastName"],
+        url
+    }
+    userListInit(params);
 }
 const onDeactivate = () => {
     mainScriptEnd();
-    //userListDestroy();
+    userListDestroy();
 }
 
-//wait while page will be builded
-setTimeout(() => {
-    console.log('hello linkedIn')
-    buttonInit(onActivate, onDeactivate);
-}, 500);
+/*waiting for the header to be generated */
+const checkLoad = () => {
+    if ($('.global-nav__primary-items').length) {
+        buttonInit(onActivate, onDeactivate);
+    } else {
+        setTimeout(checkLoad, 100);
+    }
+}
+
+checkLoad();
