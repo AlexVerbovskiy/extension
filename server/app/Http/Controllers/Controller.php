@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\DB;
 
 class Controller extends BaseController
 {
@@ -20,6 +21,7 @@ class Controller extends BaseController
             $userInfo->urn = $data['urn'];
             $userInfo->active = $data['active'];
             $userInfo->image = $data['image'];
+            $userInfo->status = true;
             $userInfo->image_id = $data['image_id'];
             $userInfo->save();
         } catch (\Exception $e) {
@@ -33,7 +35,14 @@ class Controller extends BaseController
     public function getAllUsers(Request $request, $id = "")
     {
         try {
-            $data = \App\Models\UserInfo::where([['active', '=', 1], ['linkedin_id', '!=', $id]])->get();
+            $data = DB::table('user_info')
+                ->select(DB::raw('first_name, last_name, active, image, urn, image_id, status, linkedin_id,
+                TIMESTAMPDIFF(SECOND, updated_at, NOW()) as last_active'))
+                ->where([['active', '=', 1], ['linkedin_id', '!=', $id]])
+                ->orderBy('status', 'DESC')
+                ->orderBy('updated_at', 'DESC')
+                ->get();
+
             return json_encode($data);
         } catch (\Exception $e) {
             file_put_contents("log.txt", $e->getMessage());
@@ -50,5 +59,15 @@ class Controller extends BaseController
             file_put_contents("log.txt", $e->getMessage());
             return json_encode(0);
         }
+    }
+
+    public function setOffline(Request $request)
+    {
+        $data = json_decode($request->getContent(), true);
+        $id = $data['id'];
+        $userInfo = \App\Models\UserInfo::where('linkedin_id', "=", $id)->firstOrFail();
+        $userInfo->status = false;
+        $userInfo->save();
+        return json_encode(1);
     }
 }

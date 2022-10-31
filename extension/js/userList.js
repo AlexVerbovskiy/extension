@@ -10,10 +10,15 @@ const userElementGenerate = user => {
                 class="lazy-image msg-overlay-search-result-picture__background-img full-width full-height round ghost-person ember-view">
         </div>
 
-        <div class="display-flex overflow-hidden pv1 pl2">
+        <div class="overflow-hidden pv1 pl2">
             <h4 class="msg-overlay-search-result-name t-12 t-black t-bold flex-shrink-zero truncate">
             ${fullName}
             </h4>
+            ${user["status"]?
+                `<span class="online">online</span>`
+                :
+                `<span>${getTimeActive(user["last_active"])}</span>`
+            }
         </div>
     </div>
 </li>`;
@@ -140,13 +145,11 @@ const userListInit = (params) => {
     const startTimeout = () => {
         updateUsersTimeout = setTimeout(() => {
             const newUsers = getUsers();
-            if (cachedUsers.length !== newUsers.length) {
-                const temp = text;
-                stateReset();
-                text = temp;
-                userElementRemove();
-                downloadUsers();
-            }
+            const temp = text;
+            stateReset();
+            text = temp;
+            userElementRemove();
+            downloadUsers();
             startTimeout();
         }, listUsersUpdateTime)
     }

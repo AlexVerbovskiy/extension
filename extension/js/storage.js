@@ -20,3 +20,12 @@ const getCountUsersSession = () => {
     if (!images) return 0;
     return images.length;
 }
+
+const setCountPages = (callback) => {
+    chrome.storage.local.get(["countPages"], function (result) {
+        const elem = {};
+        elem["countPages"] = callback(result["countPages"]);
+        chrome.storage.local.set(elem);
+    });
+    callback(1);
+}

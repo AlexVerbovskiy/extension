@@ -23,11 +23,3 @@ chrome.runtime.onMessage.addListener(
 
     }
 );
-
-/*
-fetch(url, init).then((response) => {
-            const data = response.json();
-            console.log(data)
-            return data;
-        });
-*/

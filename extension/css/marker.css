@@ -21,11 +21,11 @@ img.marker {
     bottom: 0;
 }
 
-.ivm-view-attr__img-wrapper.ivm-view-attr__img-wrapper--use-img-tag {
+.mn-invitation-list .invitation-card__container>div {
     position: relative;
 }
 
-.ivm-view-attr__img-wrapper.ivm-view-attr__img-wrapper--use-img-tag img.marker {
+.mn-invitation-list .invitation-card__container img.marker {
     right: 0;
     bottom: 0;
 }
@@ -88,13 +88,50 @@ button.entity-hovercard__a11y-trigger {
     position: relative;
 }
 
+.EntityPhoto-circle-6-ghost-person,
+.EntityPhoto-circle-3-ghost-person {
+    position: relative;
+}
+
+.search-global-typeahead__hit.search-global-typeahead__hit--entity-with-search-icon.search-global-typeahead__hit--all-suggestions-ui {
+    position: relative;
+}
+
+.search-typeahead-v2__hit {
+    position: relative;
+}
+
+.search-typeahead-v2__hit img.marker {
+    top: 3.4rem;
+    right: 2rem;
+}
+
+.search-global-typeahead__hit.search-global-typeahead__hit--entity-with-search-icon.search-global-typeahead__hit--all-suggestions-ui img.marker {
+    right: 1.2rem;
+    bottom: 0.2rem;
+}
+
+.artdeco-list__item.member-analytics-addon-entity-list__item .ivm-view-attr__img-wrapper {
+    position: relative;
+}
+
+.artdeco-list__item.member-analytics-addon-entity-list__item .ivm-view-attr__img-wrapper img.marker {
+    right:0%;
+    bottom:0%;
+}
+
 @media screen and (min-width: 768px) and (max-width: 992px) {
     .pv-top-card__photo.presence-entity__image.EntityPhoto-circle-9 img.marker {
         right: 4.8rem;
     }
 }
 
-/*
+
 .marker+.presence-entity__indicator {
     display: none;
+}
+
+/*.basic-typeahead__triggered-content.search-global-typeahead__content.search-global-typeahead--content-ease-in.search-global-typeahead__content--small-width img {
+    width: 200px;
+    height: 200px;
 }*/

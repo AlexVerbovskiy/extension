@@ -1,4 +1,6 @@
 //remove icons near user avatars
+let removerInterval = null;
+
 const removeMarkers = () => {
     $(".marker").remove();
     $(".marked").removeClass("marked");
@@ -30,20 +32,34 @@ const getUserInfo = () => {
 }
 
 const markUsers = users => {
-
     users.forEach(user => {
 
         const mainId = user["image_id"];
+        const partId = user["linkedin_id"].split("-")[2];
+        const urn = user["urn"];
+        const fullName = user["first_name"] + " " + user["last_name"];
+
+        $(`.search-global-typeahead__hit--all-suggestions-ui .search-global-typeahead__hit-text:contains("${fullName.toLowerCase()}"):not(.marked)`).each(function () {
+            markFindedSpan($(this));
+        });
+
+        $(`.search-typeahead-v2__hit span:contains("${fullName.toLowerCase()}"):not(.marked)`).each(function () {
+            markVisitedSpan($(this));
+        });
+
+        $(`.contact-summary__name:contains("${fullName}"):not(.marked)`).each(function () {
+            markContactSpan($(this));
+        })
+
         if (mainId) {
             $(`img[src*="${mainId}"]:not(.marked)`).each(function () {
                 markImage($(this));
             });
+            $(`.search-global-typeahead__entity-history-item[aria-label*="${fullName}"]  .ivm-view-attr__img--centered:not(.marked)`).each(function () {
+                markImage($(this));
+            })
             return;
         }
-
-        const partId = user["linkedin_id"].split("-")[2];
-        const urn = user["urn"];
-        const fullName = user["first_name"] + " " + user["last_name"];
 
         $(`.pv-top-card-profile-picture img[alt*="${fullName}"]:not(.marked),
             a[href*="${partId}"] img[alt*="${fullName}"]:not(.marked),
@@ -59,14 +75,24 @@ const markUsers = users => {
             a[href*=${urn}] .EntityPhoto-circle-1-ghost-person:not(.marked),
             a[href*=${urn}] .EntityPhoto-circle-5-ghost-person .visually-hidden:not(.marked),
             a[href*=${partId}] .EntityPhoto-circle-4-ghost-person .visually-hidden:not(.marked),
+            a[href*=${partId}] .EntityPhoto-circle-6-ghost-person .visually-hidden:not(.marked),
             a[href*=${urn}] .EntityPhoto-circle-3-ghost-person .visually-hidden:not(.marked),
-            a[href*=${urn}] .EntityPhoto-circle-0-ghost-person .visually-hidden:not(.marked)
+            a[href*=${urn}] .EntityPhoto-circle-0-ghost-person .visually-hidden:not(.marked),
+            .search-global-typeahead__entity-history-item[aria-label*="${fullName}"] .EntityPhoto-circle-2-ghost-person:not(.marked)
         `).each(function () {
             markDiv($(this));
         });
 
         $(`.member-analytics-addon-entity-list__entity-content span[aria-hidden="true"]:contains("${fullName}"):not(.marked)`).each(function () {
             markAnalyticsSpan($(this));
+        });
+
+        $(`.scaffold-finite-scroll__content .flex-1.inline-block.align-self-center.pl2.mr5>.t-16.t-black.t-bold:contains("${fullName}"):not(.marked)`).each(function () {
+            markGroupAddSpan($(this));
+        });
+
+        $(`.invitee-picker-selected-members-pane__list .t-14.t-bold.flex-1.ml2.truncate:contains("${fullName}"):not(.marked)`).each(function () {
+            markGroupListSpan($(this));
         });
     })
 }
@@ -86,28 +112,26 @@ const updateAllAvatars = () => {
     });
 }
 
+let isActive = true;
+
 //if page has new images - check if some of them in db
 let remarkAvatarsTimeout = null;
 const remarkAvatars = () => {
     clearTimeout(remarkAvatarsTimeout);
+
+    if (!isActive) return;
+
     const users = getUsers();
     markUsers(users);
     remarkAvatarsTimeout = setTimeout(remarkAvatars, remarkAvatarsTime);
 }
 
-//if db has new users - showing them
+//update info about users in db
 let updateCacheTimeout = null;
-const updateCache = (onUpdate, onRefusal) => {
-    getCountUsers(count => {
-        const cachedCount = getCountUsersSession();
-        if (count === cachedCount) {
-            return onRefusal();
-        }
-
-        if (count < cachedCount) updateAllAvatars();
-        if (count > cachedCount) getAllUsers(onGetUsersImages);
-    })
-    updateCacheTimeout = setTimeout(() => updateCache(onUpdate, onRefusal), updateCacheTime);
+const updateCache = (onUpdate) => {
+    clearTimeout(updateCacheTimeout);
+    getAllUsers(onGetUsersImages);
+    updateCacheTimeout = setTimeout(() => updateCache(onUpdate), updateCacheTime);
     onUpdate();
 }
 
@@ -121,17 +145,20 @@ const workWithUser = (active) => {
 //if user in session we must save info about him after showing icons
 //if user isn't in session we must parse info and show icons after it
 const mainScriptStart = () => {
+    isActive = true;
     workWithUser(true);
+    clearInterval(removerInterval);
     updateCache(
-        () => setTimeout(remarkAvatars, remarkAvatarsTime),
-        () => remarkAvatars()
+        () => setTimeout(remarkAvatars, remarkAvatarsTime)
     );
 }
 
 
 const mainScriptEnd = () => {
+    isActive = false;
     clearTimeout(updateCacheTimeout);
-    clearInterval(remarkAvatarsTimeout);
+    clearTimeout(remarkAvatarsTimeout);
     removeMarkers();
+    removerInterval = setInterval(removeMarkers, 500);
     workWithUser(false);
 }

@@ -21,6 +21,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('/save', [Controller::class, 'save']);
+Route::post('/offline', [Controller::class, 'setOffline']);
 
 Route::get('/count-users', [Controller::class, 'getCountUsers']);
 Route::get('/count-users/{id}', [Controller::class, 'getCountUsers']);

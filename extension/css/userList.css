@@ -10,3 +10,11 @@
     max-height: calc(100vh - 100px - 48px - 48px);
     overflow-y: auto;
 }
+
+#user-list-search-bar span {
+    font-size: 10px;
+}
+
+#user-list-search-bar .online {
+    color: rgb(149, 248, 0);
+}

@@ -21,5 +21,6 @@ class UserInfo extends Model
         'linkedin_id',
         'url',
         'active',
+        'status'
     ];
 }

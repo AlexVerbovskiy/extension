@@ -4,6 +4,10 @@ const buttonInit = (onActivate, onDeactivate) => {
     li.setAttribute("id", "extension-li")
     li.classList.add("global-nav__primary-item");
 
+    const imageLi = document.createElement("li");
+    imageLi.setAttribute("id", "image-li")
+    imageLi.classList.add("global-nav__primary-item");
+
     //block subtitle
     const label = document.createElement("span");
     label.classList.add("global-nav__primary-link-text");
@@ -27,6 +31,7 @@ const buttonInit = (onActivate, onDeactivate) => {
         } else {
             onDeactivate();
         }
+        imageLi.classList.toggle("active");
     });
     swapper.append(checkbox);
 
@@ -38,13 +43,18 @@ const buttonInit = (onActivate, onDeactivate) => {
         checkbox.setAttribute("checked", true);
         label.innerText = "On";
         onActivate();
+        imageLi.classList.add("active");
     } else {
         onDeactivate();
+        imageLi.classList.remove("active");
     }
+
+    imageLi.insertAdjacentHTML('beforeend', `<img style=" height:40px; width:40px;" src='${iconSrc}'>`);
 
     //appending subtitle and swapper in new section
     li.append(swapper, label);
 
     //appending section to header end 
+    $('.global-nav__primary-items').append(imageLi);
     $('.global-nav__primary-items').append(li);
 }

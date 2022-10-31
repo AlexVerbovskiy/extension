@@ -52,3 +52,19 @@ const getCountUsers = (success) => {
         name: "count-users"
     }, success);
 }
+
+//the count of users who installed the extension and activated it
+const setUserOffline = () => {
+    const id = getUserId() || "";
+    const url = apiURL + "offline";
+    const data = JSON.stringify({
+        id
+    });
+
+    sendRequest({
+        url,
+        data,
+        type: "post",
+        name: "offline"
+    }, (data) => console.log(data));
+}
