@@ -76,3 +76,9 @@ input:checked+.slider:before {
 #image-li:not(.active) {
     filter: grayscale(1);
 }
+
+#is-active-span {
+    position: relative;
+    width: 20px;
+    height: 20px;
+}

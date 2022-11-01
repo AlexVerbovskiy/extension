@@ -127,16 +127,18 @@ const findMarkActualUserPhotos = ({
         .global-nav__me img:not(.marked, .marker),
         .feed-shared-avatar-image img:not(.marked, .marker),
         a[href*="${urn}"] img[alt*="${fullName}"]:not(.marked),
-        a[href*="${urn}"] div[class*="ghost-person"]:not(.marked),
         #msg-overlay header img:not(.marked, .marker),
         #user-list header img:not(.marked, .marker)
     `).each(function () {
         markImage($(this));
     })
 
-    $(".artdeco-card.ember-view.pv-top-card .profile-photo-edit__camera-plus").each(function () {
+    $(`.artdeco-card.ember-view.pv-top-card .profile-photo-edit__camera-plus,
+        a[href*="${urn}"] div[class*="ghost-person"]:not(.marked),
+        .job-card-list__insight div[class*='ghost-person']:not(.marked)`).each(function () {
         markDiv($(this));
     })
+
 
 }
 
@@ -184,6 +186,7 @@ const findMarkUserPhotos = ({
         a[href*=${partId}] .EntityPhoto-circle-6-ghost-person .visually-hidden:not(.marked),
         a[href*=${urn}] .EntityPhoto-circle-3-ghost-person .visually-hidden:not(.marked),
         a[href*=${urn}] .EntityPhoto-circle-0-ghost-person .visually-hidden:not(.marked),
+        a[href*="${urn}"] div[class*="ghost-person"]:not(.marked, :has(.visually-hidden)),
         .search-global-typeahead__entity-history-item[aria-label*="${fullName}"] .EntityPhoto-circle-2-ghost-person:not(.marked)
     `).each(function () {
         markDiv($(this));
@@ -206,7 +209,6 @@ const findMarkUserPhotos = ({
     });
 
     $(`.artdeco-card.ember-view p.flex-shrink-1.t-14.t-black.t-normal:contains("${fullName}"):not(.marked)`).each(function () {
-        console.log($(this));
         markGroupUser($(this));
     });
 }

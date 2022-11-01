@@ -150,7 +150,7 @@ button.entity-hovercard__a11y-trigger {
 
 .msg-s-profile-card .artdeco-entity-lockup__image img.marker,
 .artdeco-card .artdeco-entity-lockup__image img.marker {
-    top: 40px;
+    top: 52px;
 }
 
 @media screen and (min-width: 768px) and (max-width: 992px) {
@@ -163,6 +163,22 @@ button.entity-hovercard__a11y-trigger {
 .marker+.presence-entity__indicator,
 button:has(> img.marker)~.presence-entity__indicator {
     display: none;
+}
+
+.social-details-reactors-tab-body-list-item.artdeco-list__item img.marker {
+    margin-right: -14px;
+    top: 40px;
+}
+
+.social-details-reactors-facepile__list img.marker {
+    height: 16px !important;
+    width: 16px !important;
+    right: 0;
+    bottom: 0;
+}
+
+.social-details-reactors-tab-body-list-item.artdeco-list__item:has(img.marker) .artdeco-entity-lockup__image.artdeco-entity-lockup__image--type-circle:has(img.marker) {
+    margin-right: 0px;
 }
 
 
@@ -184,7 +200,7 @@ button:has(> img.marker)~.presence-entity__indicator {
 }
 
 .feed-identity-module__actor-meta a>div img.marker {
-    right: 5.5rem;
+    right: calc(50% - 35px);
     bottom: 2rem;
 }
 
@@ -234,7 +250,7 @@ button:has(> img.marker)~.presence-entity__indicator {
 }
 
 .profile-rail-card__profile-link img.marker {
-    right: 5.5rem;
+    right: calc(50% - 35px);
     bottom: 1.5rem;
 }
 

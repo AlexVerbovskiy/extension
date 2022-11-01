@@ -5,11 +5,12 @@ const buttonInit = (onActivate, onDeactivate) => {
     li.classList.add("global-nav__primary-item");
 
     const imageLi = document.createElement("li");
-    imageLi.setAttribute("id", "image-li")
+    imageLi.setAttribute("id", "image-li");
     imageLi.classList.add("global-nav__primary-item");
 
     //block subtitle
     const label = document.createElement("span");
+    label.setAttribute("id", "is-active-span");
     label.classList.add("global-nav__primary-link-text");
     label.innerText = "Off";
 
