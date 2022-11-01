@@ -36,7 +36,6 @@ window.onbeforeunload = function (e) {
 
 //on open window save info about count linkedin pages
 setCountPages(count => {
-    console.log(count)
     if (count) return count + 1;
     return 1;
 });
