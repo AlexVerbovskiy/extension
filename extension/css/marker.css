@@ -227,7 +227,11 @@ article.nt-card.nt-card--redesigned.nt-card--with-hover-states img.marker {
     position: relative;
 }
 
-
+.scaffold-finite-scroll__content .ember-view.follows-recommendation-card img.marker {
+    right: 0.5rem;
+    bottom: 0.5rem;
+    top: auto;
+}
 
 
 

@@ -124,7 +124,7 @@ const findMarkActualUserPhotos = ({
     //if user hasn't image find him by names, urls and ids(where it can be realized)
     $(`a[href*="${partId}"] img:not(.marked, .marker),
         .global-nav__me img:not(.marked, .marker),
-        .feed-shared-avatar-image img:not(.marked, .marker),
+        .comments-comment-box__avatar-image img[alt*="${fullName}"]:not(.marked),
         a[href*="${urn}"] img[alt*="${fullName}"]:not(.marked),
         #msg-overlay header img:not(.marked, .marker),
         #user-list header img:not(.marked, .marker),
