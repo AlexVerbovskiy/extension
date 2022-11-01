@@ -182,13 +182,13 @@ const findMarkUserPhotos = ({
         markImage($(this));
     });
 
-    $(`a[href*=${urn}] .EntityPhoto-circle-2-ghost-person:not(.marked),
-        a[href*=${urn}] .EntityPhoto-circle-1-ghost-person:not(.marked),
-        a[href*=${urn}] .EntityPhoto-circle-5-ghost-person .visually-hidden:not(.marked),
-        a[href*=${partId}] .EntityPhoto-circle-4-ghost-person .visually-hidden:not(.marked),
-        a[href*=${partId}] .EntityPhoto-circle-6-ghost-person .visually-hidden:not(.marked),
-        a[href*=${urn}] .EntityPhoto-circle-3-ghost-person .visually-hidden:not(.marked),
-        a[href*=${urn}] .EntityPhoto-circle-0-ghost-person .visually-hidden:not(.marked),
+    $(`a[href*="${urn}"] .EntityPhoto-circle-2-ghost-person:not(.marked),
+        a[href*="${urn}"] .EntityPhoto-circle-1-ghost-person:not(.marked),
+        a[href*="${urn}"] .EntityPhoto-circle-5-ghost-person .visually-hidden:not(.marked),
+        a[href*="${partId}"] .EntityPhoto-circle-4-ghost-person .visually-hidden:not(.marked),
+        a[href*="${partId}"] .EntityPhoto-circle-6-ghost-person .visually-hidden:not(.marked),
+        a[href*="${urn}"] .EntityPhoto-circle-3-ghost-person .visually-hidden:not(.marked),
+        a[href*="${urn}"] .EntityPhoto-circle-0-ghost-person .visually-hidden:not(.marked),
         a[href*="${urn}"] div[class*="ghost-person"]:not(.marked, :has(.visually-hidden)),
         .search-global-typeahead__entity-history-item[aria-label*="${fullName}"] .EntityPhoto-circle-2-ghost-person:not(.marked)
     `).each(function () {
