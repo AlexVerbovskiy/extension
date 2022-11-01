@@ -13,8 +13,11 @@
 
 #user-list-search-bar span {
     font-size: 10px;
+    display: block;
+    margin-top: 2px;
+    font-weight: 500;
 }
 
 #user-list-search-bar .online {
-    color: rgb(149, 248, 0);
+    color: rgb(0, 207, 17);
 }

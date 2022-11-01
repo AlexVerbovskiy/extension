@@ -13,7 +13,7 @@
     "matches": ["*://www.linkedin.com/*"],
     "js": [
       "js/jquery-3.6.0.min.js", "js/utils.js", "js/storage.js", "js/requests.js",
-      "js/static.js", "js/main.js", "js/button.js", "js/userList.js", "js/content.js"
+      "js/static.js", "js/main.js", "js/button.js", "js/userList.js", "js/content.js", "js/marker.js"
     ],
     "css": ["css/button.css", "css/marker.css", "css/userList.css"]
   }],

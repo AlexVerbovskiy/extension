@@ -14,7 +14,8 @@ const userElementGenerate = user => {
             <h4 class="msg-overlay-search-result-name t-12 t-black t-bold flex-shrink-zero truncate">
             ${fullName}
             </h4>
-            ${user["status"]?
+            ${user["status"]
+                ?
                 `<span class="online">online</span>`
                 :
                 `<span>${getTimeActive(user["last_active"])}</span>`
@@ -68,7 +69,7 @@ const getHeaderHtml = ({
             <span class="truncate t-14 t-bold
       t-black">
                 <span aria-hidden="true">
-                    Users
+                    Linkedating
                 </span>
             </span>
         </button>
@@ -144,7 +145,8 @@ const userListInit = (params) => {
 
     const startTimeout = () => {
         updateUsersTimeout = setTimeout(() => {
-            const newUsers = getUsers();
+            cachedUsers = getUsers();
+            console.log(cachedUsers);
             const temp = text;
             stateReset();
             text = temp;

@@ -6,6 +6,8 @@ img.marker {
     background-color: transparent !important;
 }
 
+
+/*all users marker*/
 .presence-entity.presence-entity--size-4 img.marker {
     right: 0;
     bottom: 0;
@@ -21,7 +23,7 @@ img.marker {
     bottom: 0;
 }
 
-.mn-invitation-list .invitation-card__container>div {
+.mn-invitation-list .invitation-card__container>div a {
     position: relative;
 }
 
@@ -116,8 +118,39 @@ button.entity-hovercard__a11y-trigger {
 }
 
 .artdeco-list__item.member-analytics-addon-entity-list__item .ivm-view-attr__img-wrapper img.marker {
-    right:0%;
-    bottom:0%;
+    right: 0%;
+    bottom: 0%;
+}
+
+.follows-recommendation-card__content>a {
+    position: relative;
+}
+
+.update-components-header__text-wrapper .ivm-view-attr__img-wrapper--use-img-tag {
+    position: relative;
+}
+
+.update-components-header__text-wrapper .ivm-view-attr__img-wrapper--use-img-tag img.marker {
+    right: 0%;
+    bottom: 0%;
+}
+
+.comments-post-meta .ivm-view-attr__img-wrapper {
+    position: relative;
+}
+
+.msg-s-profile-card .artdeco-entity-lockup__image,
+.artdeco-card .artdeco-entity-lockup__image {
+    margin-right: 0 !important;
+}
+
+.artdeco-card .ivm-view-attr__img-wrapper {
+    position: relative;
+}
+
+.msg-s-profile-card .artdeco-entity-lockup__image img.marker,
+.artdeco-card .artdeco-entity-lockup__image img.marker {
+    top: 40px;
 }
 
 @media screen and (min-width: 768px) and (max-width: 992px) {
@@ -127,8 +160,82 @@ button.entity-hovercard__a11y-trigger {
 }
 
 
-.marker+.presence-entity__indicator {
+.marker+.presence-entity__indicator,
+button:has(> img.marker)~.presence-entity__indicator {
     display: none;
+}
+
+
+/*actual user marker*/
+
+.artdeco-dropdown__trigger {
+    position: relative;
+}
+
+.artdeco-dropdown__trigger img.marker {
+    bottom: 4px;
+    position: relative;
+    left: 8px;
+    margin-bottom: -5px;
+}
+
+.feed-identity-module__actor-meta a>div {
+    position: relative;
+}
+
+.feed-identity-module__actor-meta a>div img.marker {
+    right: 5.5rem;
+    bottom: 2rem;
+}
+
+.share-box-feed-entry__avatar {
+    position: relative;
+}
+
+.artdeco-dropdown__content {
+    position: relative;
+}
+
+.artdeco-entity-lockup__image.artdeco-entity-lockup__image--type-circle:has(img.marker) {
+    position: relative;
+    margin-right: -14px;
+}
+
+.artdeco-entity-lockup__image.artdeco-entity-lockup__image--type-circle img.marker {
+    right: 15px;
+    position: relative;
+    bottom: 0;
+}
+
+.global-nav__content .scaffold-layout__aside .presence-entity {
+    position: relative;
+}
+
+.global-nav__content .scaffold-layout__aside .presence-entity img.marker {
+    left: -20px;
+    top: 40px;
+}
+
+.groups-identity-module__link {
+    position: relative;
+}
+
+.groups-identity-module__link img.marker {
+    position: relative;
+    left: -20px;
+}
+
+.job-card-list__insight .ivm-view-attr__img-wrapper {
+    position: relative;
+}
+
+.msg-conversation-card__presence-entity img.marker {
+    top: 50px;
+}
+
+.profile-rail-card__profile-link img.marker {
+    right: 5.5rem;
+    bottom: 1.5rem;
 }
 
 /*.basic-typeahead__triggered-content.search-global-typeahead__content.search-global-typeahead--content-ease-in.search-global-typeahead__content--small-width img {
