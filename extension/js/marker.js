@@ -128,7 +128,8 @@ const findMarkActualUserPhotos = ({
         .feed-shared-avatar-image img:not(.marked, .marker),
         a[href*="${urn}"] img[alt*="${fullName}"]:not(.marked),
         #msg-overlay header img:not(.marked, .marker),
-        #user-list header img:not(.marked, .marker)
+        #user-list header img:not(.marked, .marker),
+        .pv-profile-sticky-header-v2__container img[alt*="${fullName}"]:not(.marked)
     `).each(function () {
         markImage($(this));
     })

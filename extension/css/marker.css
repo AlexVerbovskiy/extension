@@ -150,7 +150,7 @@ button.entity-hovercard__a11y-trigger {
 
 .msg-s-profile-card .artdeco-entity-lockup__image img.marker,
 .artdeco-card .artdeco-entity-lockup__image img.marker {
-    top: 52px;
+    top: 45px;
 }
 
 @media screen and (min-width: 768px) and (max-width: 992px) {
@@ -181,6 +181,26 @@ button:has(> img.marker)~.presence-entity__indicator {
     margin-right: 0px;
 }
 
+.scaffold-finite-scroll__content .ivm-image-view-model {
+    position: relative;
+}
+
+.scaffold-finite-scroll__content img.marker {
+    right: 0;
+}
+
+.scaffold-finite-scroll__content a img.marker {
+    right: 20px;
+    top: 40px;
+}
+
+.artdeco-card .scaffold-finite-scroll__content a img.marker {
+    right: 0px;
+}
+
+.app-aware-link.profile-rail-card__profile-link img.marker {
+    bottom: 0.7rem;
+}
 
 /*actual user marker*/
 
@@ -222,6 +242,7 @@ button:has(> img.marker)~.presence-entity__indicator {
     position: relative;
     bottom: 0;
 }
+
 
 .global-nav__content .scaffold-layout__aside .presence-entity {
     position: relative;

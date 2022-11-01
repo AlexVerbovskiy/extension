@@ -91,8 +91,8 @@ const remarkAvatars = () => {
     if (!isActive) return;
 
     const users = getUsers();
-    markUsers(users);
     markActualUser();
+    markUsers(users);
     remarkAvatarsTimeout = setTimeout(remarkAvatars, remarkAvatarsTime);
 }
 
