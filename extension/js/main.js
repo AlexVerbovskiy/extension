@@ -6,6 +6,7 @@ const removeMarkers = () => {
     $(".marked").removeClass("marked");
 }
 
+//parsing info about actual user
 const getUserInfo = () => {
     const getCountKeys = () => Object.keys(res).length;
 
@@ -31,9 +32,10 @@ const getUserInfo = () => {
     return res;
 }
 
+//mark all photos of a user using the extension
 const markActualUser = () => {
+    //take saved info about user
     const user = getCachedUser();
-
     const partId = user["id"].split("-")[2];
 
     const filteredUser = {
@@ -43,13 +45,11 @@ const markActualUser = () => {
         urn: user["urn"],
         partId
     };
-
     findMarkActualUserPhotos(filteredUser);
 
 }
 
 const markUsers = users => {
-
     users.forEach(user => {
 
         const partId = user["linkedin_id"].split("-")[2];
@@ -68,17 +68,10 @@ const markUsers = users => {
 
 const onGetUsersImages = data => {
     //if db hasn't active users - this action hasn't sense
+    removeMarkers();
     setUsers(data);
     if (data.length == 0) return;
     markUsers(data);
-}
-
-//rewriting data in session and rewriting icons
-const updateAllAvatars = () => {
-    getAllUsers(data => {
-        removeMarkers();
-        onGetUsersImages(data)
-    });
 }
 
 let isActive = true;

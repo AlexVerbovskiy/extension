@@ -1,3 +1,4 @@
+//mark span and if element hasn't marker, append it
 const markBySpan = (elem, searchingElem, size) => {
     elem.addClass("marked");
     if (!searchingElem || searchingElem.next().hasClass("marker")) return;
@@ -74,13 +75,15 @@ const markGroupUser = (elem) => {
     );
 }
 
-const markCommentsSpan = (elem) => markBySpan(
-    elem,
-    elem.closest(".comments-post-meta__profile-info-wrapper").siblings("a").find(".EntityPhoto-circle-1-ghost-person "),
-    "8"
-);
+const markCommentsSpan = (elem) => {
+    markBySpan(
+        elem,
+        elem.closest(".comments-post-meta__profile-info-wrapper").siblings("a").find(".EntityPhoto-circle-1-ghost-person "),
+        "8"
+    );
+}
 
-//create images near avatars
+//maark image and div
 const normalMark = (elem, size) => {
     //marking element
     elem.addClass("marked");
@@ -95,16 +98,15 @@ const markDiv = (elem) => normalMark(elem, elem.parent().width() / 4);
 
 
 
-
+//find and mark user images(work with all users which have images)
 const findMarkUserWithImage = (mainId, fullName) => {
-    $(`img[src*="${mainId}"]:not(.marked)`).each(function () {
+    $(`img[src*="${mainId}"]:not(.marked), 
+        .search-global-typeahead__entity-history-item[aria-label*="${fullName}"]  .ivm-view-attr__img--centered:not(.marked)`).each(function () {
         markImage($(this));
     });
-    $(`.search-global-typeahead__entity-history-item[aria-label*="${fullName}"]  .ivm-view-attr__img--centered:not(.marked)`).each(function () {
-        markImage($(this));
-    })
 }
 
+//find and mark actual user images or block which contains info about actual user photo
 const findMarkActualUserPhotos = ({
     mainId,
     firstName,
@@ -114,15 +116,12 @@ const findMarkActualUserPhotos = ({
 }) => {
     const fullName = firstName + " " + lastName;
 
-    $("#ember18 .artdeco-dropdown__content-inner").each(function () {
-        console.log($(this));
-    })
-
     if (mainId) {
         findMarkUserWithImage(mainId, fullName);
         return;
     }
 
+    //if user hasn't image find him by names, urls and ids(where it can be realized)
     $(`a[href*="${partId}"] img:not(.marked, .marker),
         .global-nav__me img:not(.marked, .marker),
         .feed-shared-avatar-image img:not(.marked, .marker),
@@ -143,6 +142,7 @@ const findMarkActualUserPhotos = ({
 
 }
 
+//find and mark actual user images or block which contains info about all users
 const findMarkUserPhotos = ({
     mainId,
     firstName,
@@ -169,6 +169,8 @@ const findMarkUserPhotos = ({
         findMarkUserWithImage(mainId, fullName);
         return;
     }
+
+    //if user hasn't image find him by names, urls and ids(where it can be realized)
 
     $(`.pv-top-card-profile-picture img[alt*="${fullName}"]:not(.marked),
         a[href*="${partId}"] img[alt*="${fullName}"]:not(.marked),

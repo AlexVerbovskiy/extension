@@ -133,10 +133,19 @@ button.entity-hovercard__a11y-trigger {
 .update-components-header__text-wrapper .ivm-view-attr__img-wrapper--use-img-tag img.marker {
     right: 0%;
     bottom: 0%;
+    top: auto;
 }
 
 .comments-post-meta .ivm-view-attr__img-wrapper {
     position: relative;
+}
+
+.comments-comment-item img.marker,
+.feed-shared-actor__image img.marker {
+    right: 0 !important;
+    top: auto !important;
+    bottom: 0 !important;
+    z-index: 0;
 }
 
 .msg-s-profile-card .artdeco-entity-lockup__image,
@@ -196,13 +205,38 @@ button:has(> img.marker)~.presence-entity__indicator {
 
 .artdeco-card .scaffold-finite-scroll__content a img.marker {
     right: 0px;
+    top: 52px;
+}
+
+article.nt-card.nt-card--redesigned.nt-card--with-hover-states img.marker {
+    top: 40px;
 }
 
 .app-aware-link.profile-rail-card__profile-link img.marker {
     bottom: 0.7rem;
 }
 
+.member-analytics-addon-entity-list img.marker {
+    height: 14px !important;
+    width: 14px !important;
+    top: 35px !important;
+    left: -15px !important
+}
+
+.entity-hovercard.active .ivm-view-attr__img-wrapper {
+    position: relative;
+}
+
+
+
+
+
 /*actual user marker*/
+
+
+
+
+
 
 .artdeco-dropdown__trigger {
     position: relative;

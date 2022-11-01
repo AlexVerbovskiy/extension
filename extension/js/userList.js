@@ -1,3 +1,4 @@
+//build block with another user info
 const userElementGenerate = user => {
     const fullName = user["first_name"] + " " + user["last_name"];
     const url = user["image"] || "https://static-exp1.licdn.com/sc/h/1c5u578iilxfi4m4dvc4q810q";
@@ -25,14 +26,17 @@ const userElementGenerate = user => {
 </li>`;
 }
 
+//remove list with users
 const userElementRemove = () => $('.user-element').remove();
 
+//appending event on click(redirect to user profile)
 const usersElementsActivate = () => {
     $(".user-element").click(function () {
         window.location = "/in/" + $(this).data("id");
     })
 }
 
+//build block with info about lack of users
 const usersNotFoundGenerate = () => {
     const noUsers = `<div class="msg-overlay-list-bubble__default-conversation-container">
     <div class="msg-overlay-list-bubble__conversations-list">
@@ -51,8 +55,10 @@ const usersNotFoundGenerate = () => {
     $("#user-list-section").append(noUsers);
 }
 
+//remove block with info about lack of users
 const userNotFountRemove = () => $("#user-list .msg-overlay-list-bubble__default-conversation-container").remove();
 
+//build header list with some info about actual user
 const getHeaderHtml = ({
     url,
     firstName,
@@ -89,6 +95,7 @@ const getHeaderHtml = ({
 </header>
 `;
 
+//static search bar html code
 const searchBar = `<div id="user-list-search-bar" class="msg-overlay-list-bubble-search
     ">
   <div class="msg-overlay-list-bubble-search__input-container">
@@ -118,11 +125,12 @@ const searchBar = `<div id="user-list-search-bar" class="msg-overlay-list-bubble
 </div>
 `;
 
+//static main list section html code
 const section = `<section id="user-list-section" class="scrollable msg-overlay-list-bubble__content msg-overlay-list-bubble__content--scrollable">
     <div></div>
 </section>
 `
-
+//main block under header(this block shows, when user click on header for first time)
 const getListBlockHtml = (params, getPath) => `<aside id="user-list" class="msg-overlay-container msg-overlay-container-reflow" style="
     left: 0; right:auto;">
     <div tabindex="-1" class="msg-overlay-list-bubble  msg-overlay-list-bubble--is-minimized ml4">
@@ -135,28 +143,41 @@ const getListBlockHtml = (params, getPath) => `<aside id="user-list" class="msg-
 </aside>
 `;
 
+//main list function
 const userListInit = (params) => {
 
+    //is active list(if active, show block with users)
     let isActive = false;
+
+    //text - value in search bar, start - next user position in array, 
+    //canDownload - if userlist show all users, block all event's to build new users
+    //cachedUsers - local saved users
     let text, start, canDownload, cachedUsers;
 
+    //timer which update rebuild user list
     let updateUsersTimeout = null;
     const stopTimeout = () => clearTimeout(updateUsersTimeout);
 
+    //if list opened and user doesn't scroll it, call updating users after a certain time
     const startTimeout = () => {
         updateUsersTimeout = setTimeout(() => {
             cachedUsers = getUsers();
-            console.log(cachedUsers);
+
+            //before resetting state, save info about text in searchbar
             const temp = text;
             stateReset();
             text = temp;
+
+            //rebuild user list
             userElementRemove();
             downloadUsers();
+
+            //call update after a certain time
             startTimeout();
         }, listUsersUpdateTime)
     }
 
-
+    //reset state to base value
     const stateReset = () => {
         text = "";
         start = 0;
@@ -164,20 +185,26 @@ const userListInit = (params) => {
         cachedUsers = getUsers();
     }
 
+    //get more users from storage and show them
     const downloadUsers = () => {
         if (!canDownload) return;
 
+        //delete block with info about lack users
         if (start == 0) userNotFountRemove();
 
+        //get new users, build them and activate
         const users = filterUsers(cachedUsers, start, text);
         users.forEach(user => $("#user-list-elem").append(userElementGenerate(user)));
         usersElementsActivate();
 
         start += users.length;
+
+        //if users wasn't found, show info about it
         if (users.length < 10) canDownload = false;
         if (start === 0) usersNotFoundGenerate();
     }
 
+    //when user input text in search bar - rebuild user - list
     const onChangeText = (value) => {
         userElementRemove();
         userNotFountRemove();
@@ -187,29 +214,42 @@ const userListInit = (params) => {
         downloadUsers();
     }
 
+    //show arrow icon bottom or down if user list active or not
     const getPath = () => {
         if (isActive) return "M1 5l7 4.61L15 5v2.39L8 12 1 7.39z";
         return "M15 11L8 6.39 1 11V8.61L8 4l7 4.61z";
     }
 
+    //build header in mainBlock
     $(".artdeco-toasts").append(getListBlockHtml(params, getPath));
 
     $("#user-list-header").click(function () {
+        //on click header change isActive value< get new icon path and rebuild icon in header
         isActive = !isActive;
         const newPath = getPath();
         $("#user-list-icon path").attr("d", newPath);
         $("#user-list>.msg-overlay-list-bubble").removeClass("msg-overlay-list-bubble--is-minimized");
 
+
         if (isActive) {
+            //if list visible - reset sdtate to base, append search bar and main section to block
             stateReset();
             $("#user-list-header").after(searchBar, section);
+
+            //start updating users after few seconds
             startTimeout();
+
+            //show users in list
             downloadUsers();
 
+            //bind event listener on change text with search bar
             $("#msg-overlay-list-bubble-search__search-typeahead-input").on('input', function () {
                 onChangeText($(this).val());
             });
 
+            //start listening scrolling user list
+            //if user return block to zero position, start updating users
+            //if user scrolled - stop updating
             $(function () {
                 $('#user-list-elem').on('scroll', function (e) {
                     const scrollHeight = $(this).prop('scrollHeight');
@@ -229,6 +269,7 @@ const userListInit = (params) => {
             })
 
         } else {
+            //if list hidden - remove user list, remove search bar and main block
             $("#user-list>.msg-overlay-list-bubble").addClass("msg-overlay-list-bubble--is-minimized");
             $("#user-list-section").remove();
             $("#user-list-search-bar").remove();

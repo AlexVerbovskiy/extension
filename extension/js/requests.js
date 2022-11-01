@@ -1,10 +1,12 @@
 const callbacks = [];
 
+//create new request and save callback request with it name to callbacks array
 const sendRequest = (data, success) => {
     chrome.runtime.sendMessage(data);
     callbacks[data.name] = success;
 }
 
+//on creating new request, start listening input calls and if one of them has name which contains in callbacks, call this function
 chrome.runtime.onMessage.addListener(({
     name,
     res
@@ -38,18 +40,6 @@ const getAllUsers = (success) => {
         url,
         type: "get",
         name: "all-users"
-    }, success);
-}
-
-//the count of users who installed the extension and activated it
-const getCountUsers = (success) => {
-    const userId = getUserId() || "";
-    const url = apiURL + "count-users/" + userId;
-
-    sendRequest({
-        url,
-        type: "get",
-        name: "count-users"
     }, success);
 }
 

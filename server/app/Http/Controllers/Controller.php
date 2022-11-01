@@ -50,17 +50,6 @@ class Controller extends BaseController
         }
     }
 
-    public function getCountUsers(Request $request, $id = "")
-    {
-        try {
-            $count = \App\Models\UserInfo::where([['active', '=', 1], ['linkedin_id', '!=', $id]])->count();
-            return json_encode($count);
-        } catch (\Exception $e) {
-            file_put_contents("log.txt", $e->getMessage());
-            return json_encode(0);
-        }
-    }
-
     public function setOffline(Request $request)
     {
         $data = json_decode($request->getContent(), true);

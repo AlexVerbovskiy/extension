@@ -1,3 +1,4 @@
+//append icon after element
 const appendIconAfter = (size, elem) => {
     if (elem.parent().find('img.marker').length !== 0) return;
 
@@ -31,26 +32,35 @@ const parseUserInfo = userInfo => {
     };
 }
 
-
+//find users by first or last name, as in the search text, and from the starting position from the beginning
 const filterUsers = (users, start = 0, text = "") => {
+    //text and user names must be in one register
     text = text.toLowerCase();
     const res = [];
+
+    //if user search another user by first and second name, extension must understand it
     const splittedText = text.split(" ");
 
+    //function to search user if first or last name include text
     let filter = user => user["first_name"].toLowerCase().includes(text) || user["last_name"].toLowerCase().includes(text);
 
+    //if user search another user by first and second name, get first and second part from searching string 
+    //and check if first name include one of parts and last name includes another part
     if (splittedText.length >= 2) {
         filter = user => ((user["first_name"].toLowerCase().includes(splittedText[0]) && user["last_name"].toLowerCase().includes(splittedText[1])) ||
             (user["first_name"].toLowerCase().includes(splittedText[1]) && user["last_name"].toLowerCase().includes(splittedText[0])))
     }
 
+    //validating users
     users.forEach(user => {
         if (filter(user)) res.push(user);
     });
 
+    //return only ten users
     return res.slice(start, start + 10);
 }
 
+//function return message for user about offline time another user
 const getTimeActive = (seconds) => {
     if (seconds < 60) return "less than a minute ago";
     if (seconds < 120) return "about a minute ago";

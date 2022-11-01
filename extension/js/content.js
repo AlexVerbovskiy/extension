@@ -1,5 +1,7 @@
 const onActivate = () => {
     mainScriptStart();
+
+    //after receiving information about actual user, create a list based on his data
     const user = getCachedUser();
     const url = user["image"] || defaultUserImg;
     const params = {
@@ -8,14 +10,11 @@ const onActivate = () => {
         url
     }
     userListInit(params);
-    setCountPages(count => {
-        if (count) return count + 1;
-        return 1;
-    });
 }
+
 const onDeactivate = () => {
-    mainScriptEnd();
-    userListDestroy();
+    mainScriptEnd(); //stop main script
+    userListDestroy(); //hide list
 }
 
 /*waiting for the header to be generated */
@@ -27,11 +26,19 @@ const checkLoad = () => {
     }
 }
 
+//when closing the window, check if user has another linkedin window, if not, save the information about offline
 window.onbeforeunload = function (e) {
     setCountPages(count => {
         if (count == 1) setUserOffline();
         return count - 1
     });
 };
+
+//on open window save info about count linkedin pages
+setCountPages(count => {
+    console.log(count)
+    if (count) return count + 1;
+    return 1;
+});
 
 checkLoad();

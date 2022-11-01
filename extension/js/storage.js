@@ -14,13 +14,7 @@ const setUsers = users => sessionStorage.setItem('users', JSON.stringify(users))
 const getUsers = () => JSON.parse(sessionStorage.getItem('users')) || [];
 const removeUsers = () => sessionStorage.removeItem('users');
 
-//info about count users
-const getCountUsersSession = () => {
-    const images = getUsers();
-    if (!images) return 0;
-    return images.length;
-}
-
+//incrementing and decrementing count opened linkedin pages in chrome
 const setCountPages = (callback) => {
     chrome.storage.local.get(["countPages"], function (result) {
         const elem = {};
