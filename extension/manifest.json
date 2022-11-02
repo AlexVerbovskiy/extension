@@ -20,5 +20,8 @@
   "web_accessible_resources": [{
     "resources": ["heart.svg"],
     "matches": ["*://www.linkedin.com/*"]
+  }, {
+    "resources": ["ghost.svg"],
+    "matches": ["*://www.linkedin.com/*"]
   }]
 }

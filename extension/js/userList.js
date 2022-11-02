@@ -1,7 +1,7 @@
 //build block with another user info
 const userElementGenerate = user => {
     const fullName = user["first_name"] + " " + user["last_name"];
-    const url = user["image"] || "https://static-exp1.licdn.com/sc/h/1c5u578iilxfi4m4dvc4q810q";
+    const url = user["image"] || defaultUserImg;
 
     return `<li class="user-element msg-overlay-list-bubble-search__list-item display-flex align-items-center pv2 ph3" data-id=${user["urn"]}>
     <div class="display-flex align-items-center overflow-hidden" tabindex="-1">

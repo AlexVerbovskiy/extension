@@ -21,5 +21,4 @@ const setCountPages = (callback) => {
         elem["countPages"] = callback(result["countPages"]);
         chrome.storage.local.set(elem);
     });
-    callback(1);
 }
