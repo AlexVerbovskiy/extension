@@ -128,13 +128,18 @@ const findMarkActualUserPhotos = ({
         a[href*="${urn}"] img[alt*="${fullName}"]:not(.marked),
         #msg-overlay header img:not(.marked, .marker),
         #user-list header img:not(.marked, .marker),
-        .pv-profile-sticky-header-v2__container img[alt*="${fullName}"]:not(.marked)
+        .pv-profile-sticky-header-v2__container img[alt*="${fullName}"]:not(.marked),
+        .share-creation-state__member-info img[alt*="${fullName}"]:not(.marked),
+        .feed-shared-social-action-bar__action-button .artdeco-button__text img[alt*="${fullName}"]:not(.marked),
+        #artdeco-modal-outlet .artdeco-entity-lockup__image.artdeco-entity-lockup__image--type-circle img[alt*="${fullName}"]:not(.marked)
     `).each(function () {
         markImage($(this));
     })
 
+
     $(`.artdeco-card.ember-view.pv-top-card .profile-photo-edit__camera-plus,
         a[href*="${urn}"] div[class*="ghost-person"]:not(.marked),
+        a[href*="${partId}"] .EntityPhoto-circle-3-ghost-person .visually-hidden:not(.marked),
         .job-card-list__insight div[class*='ghost-person']:not(.marked)`).each(function () {
         markDiv($(this));
     })
@@ -165,6 +170,10 @@ const findMarkUserPhotos = ({
         markContactSpan($(this));
     })
 
+    $(`#msg-overlay img[alt*="${fullName}"]:not(.marked)`).each(function () {
+        markImage($(this));
+    });
+
     if (mainId) {
         findMarkUserWithImage(mainId, fullName);
         return;
@@ -177,7 +186,8 @@ const findMarkUserPhotos = ({
         a[href*="${urn}"] img[alt*="${fullName}"]:not(.marked),
         .msg-overlay-conversation-bubble img[alt*="${fullName}"]:not(.marked),
         .msg-overlay-container img[alt*="${fullName}"]:not(.marked),
-        .msg-s-event-listitem__seen-receipts img[alt*="${fullName}"]:not(.marked)
+        .msg-s-event-listitem__seen-receipts img[alt*="${fullName}"]:not(.marked),
+        .pv-profile-sticky-header-v2__container img[alt*="${fullName}"]:not(.marked)
     `).each(function () {
         markImage($(this));
     });
@@ -190,6 +200,7 @@ const findMarkUserPhotos = ({
         a[href*="${urn}"] .EntityPhoto-circle-3-ghost-person .visually-hidden:not(.marked),
         a[href*="${urn}"] .EntityPhoto-circle-0-ghost-person .visually-hidden:not(.marked),
         a[href*="${urn}"] div[class*="ghost-person"]:not(.marked, :has(.visually-hidden)),
+        a[href*="${partId}"] .EntityPhoto-circle-3-ghost-person .visually-hidden:not(.marked),
         .search-global-typeahead__entity-history-item[aria-label*="${fullName}"] .EntityPhoto-circle-2-ghost-person:not(.marked)
     `).each(function () {
         markDiv($(this));

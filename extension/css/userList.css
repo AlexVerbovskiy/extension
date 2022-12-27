@@ -1,3 +1,7 @@
+#user-list {
+    flex-direction: row !important;
+}
+
 .user-element:hover {
     background-color: rgba(0, 0, 0, 0.08);
 }

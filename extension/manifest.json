@@ -1,5 +1,8 @@
 {
   "name": "Linkedating",
+  "icons": {
+    "128": "logo.png"
+  },
   "version": "0.0.0.1",
   "manifest_version": 3,
   "host_permissions": ["*://www.linkedin.com/*"],
@@ -18,10 +21,7 @@
     "css": ["css/button.css", "css/marker.css", "css/userList.css"]
   }],
   "web_accessible_resources": [{
-    "resources": ["heart.svg"],
-    "matches": ["*://www.linkedin.com/*"]
-  }, {
-    "resources": ["ghost.svg"],
+    "resources": ["heart.svg", "ghost.svg", "logo.svg", "logo-dark.svg"],
     "matches": ["*://www.linkedin.com/*"]
   }]
 }

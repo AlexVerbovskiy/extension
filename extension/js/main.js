@@ -105,6 +105,18 @@ const workWithUser = (active) => {
     saveUserInfo(user);
 }
 
+const hidePremium = () => {
+    setTimeout(() => {
+        if ($(".global-nav__primary-item:has(.premium-upsell-link)").length > 0) {
+            $(".global-nav__primary-item:has(.premium-upsell-link)").css('display', 'none');
+        } else {
+            hidePremium();
+        }
+    }, 10)
+}
+
+//const showPremium = () => $(".global-nav__primary-item:has(.premium-upsell-link)").css('display', 'block');
+
 //if user in session we must save info about him after showing icons
 //if user isn't in session we must parse info and show icons after it
 const mainScriptStart = () => {

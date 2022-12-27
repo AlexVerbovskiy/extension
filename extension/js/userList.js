@@ -31,8 +31,30 @@ const userElementRemove = () => $('.user-element').remove();
 
 //appending event on click(redirect to user profile)
 const usersElementsActivate = () => {
+
+    const getLink = elem => "/in/" + elem.data("id");
+
     $(".user-element").click(function () {
-        window.location = "/in/" + $(this).data("id");
+        window.location = getLink($(this));
+    })
+    $(".user-element img").on('error', function () {
+        const li = $(this).parent().parent().parent();
+        const url = getLink(li);
+        $(this).attr('src', defaultUserImg);
+        appendIconAfter('9', $(this));
+        fetch(url).then(res => res.text()).then(data => {
+            const part = "https://media.licdn.com" + data.split("media.licdn.com")[1];
+            const link_1 = part.split('&quot;')[0];
+            const link_2 = '100_100' + data.split('100_100')[1].split(',')[0];
+            let temp = link_1 + link_2;
+            temp = temp.replaceAll('&#61;', '=');
+            temp = temp.replaceAll('amp;', '');
+            temp = temp.replaceAll('&quot;', '');
+            $(this).attr('src', temp);
+            saveOtherUserImg(li.data("id"), temp);
+        }).catch(err => {
+            saveOtherUserImg(li.data("id"), '');
+        });
     })
 }
 

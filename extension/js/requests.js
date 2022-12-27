@@ -43,6 +43,35 @@ const getAllUsers = (success) => {
     }, success);
 }
 
+//this request say server that user is active
+const updateOnline = () => {
+    const userId = getUserId() || "";
+    const url = apiURL + "update-online/" + userId;
+
+    sendRequest({
+        url,
+        type: "get",
+        name: "update-online"
+    }, () => {});
+}
+
+const saveOtherUserImg = (id, url) => {
+    const m_url = apiURL + "update-user-image";
+    const data = JSON.stringify({
+        id,
+        url
+    });
+
+    sendRequest({
+        url: m_url,
+        type: "post",
+        name: "update-user-image",
+        data
+    }, (res) => {
+        console.log(res);
+    });
+}
+
 //the count of users who installed the extension and activated it
 const setUserOffline = () => {
     const id = getUserId() || "";

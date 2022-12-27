@@ -59,4 +59,29 @@ class Controller extends BaseController
         $userInfo->save();
         return json_encode(1);
     }
+
+    public function updateOnline(Request $request, $id = "")
+    {
+        try {
+            \App\Models\UserInfo::where(['linkedin_id' => $id])->update(['status' => 1]);
+        } catch (\Exception $e) {
+            file_put_contents("log.txt", $e->getMessage());
+            return json_encode([]);
+        }
+    }
+
+    public function updateUserPhoto(Request $request)
+    {
+        $data = json_decode($request->getContent(), true);
+        try {
+            $image_id = explode('?', $data['url'])[0];
+            $image_id = explode('/', $image_id);
+            $image_id = end($image_id);
+            \App\Models\UserInfo::where(['urn' => $data['id']])->update(['image' => $data['url'], 'image_id' => $image_id]);
+        } catch (\Exception $e) {
+            file_put_contents("log.txt", $e->getMessage());
+            return json_encode(0);
+        }
+        return json_encode(1);
+    }
 }

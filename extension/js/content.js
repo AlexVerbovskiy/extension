@@ -1,3 +1,5 @@
+let interval = null;
+
 const onActivate = () => {
     mainScriptStart();
 
@@ -10,9 +12,12 @@ const onActivate = () => {
         url
     }
     userListInit(params);
+
+    interval = setInterval(updateOnline, 30000);
 }
 
 const onDeactivate = () => {
+    clearInterval(interval);
     mainScriptEnd(); //stop main script
     userListDestroy(); //hide list
 }
@@ -29,15 +34,19 @@ const checkLoad = () => {
 //when closing the window, check if user has another linkedin window, if not, save the information about offline
 window.onbeforeunload = function (e) {
     setCountPages(count => {
-        if (count == 1) setUserOffline();
+        if (count < 2) setUserOffline();
         return count - 1
     });
 };
 
+
+
 //on open window save info about count linkedin pages
 setCountPages(count => {
+    console.log(count);
     if (count) return count + 1;
     return 1;
 });
 
 checkLoad();
+hidePremium();

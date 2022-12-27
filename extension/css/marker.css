@@ -70,7 +70,13 @@ button.entity-hovercard__a11y-trigger {
 }
 
 .align-items-center.link-without-hover-visited.justify-flex-start.text-body-medium img.marker {
-    left: 30px;
+    top: 42px;
+    left: 35px;
+}
+
+#interests~.artdeco-tabs img.marker {
+    bottom: 0;
+    right: 2px;
 }
 
 .msg-s-event-listitem__seen-receipts img.marker {
@@ -109,8 +115,18 @@ button.entity-hovercard__a11y-trigger {
 }
 
 .search-global-typeahead__hit.search-global-typeahead__hit--entity-with-search-icon.search-global-typeahead__hit--all-suggestions-ui img.marker {
-    right: 1.2rem;
-    bottom: 0.2rem;
+    right: 1.6rem;
+    bottom: 0.3rem;
+}
+
+.scaffold-finite-scroll__content .js-update-components-actor__avatar img.marker {
+    top: 35px;
+    right: 3px;
+}
+
+#recent-activity-top-card img.marker {
+    right: 8px;
+    bottom: 8px;
 }
 
 .artdeco-list__item.member-analytics-addon-entity-list__item .ivm-view-attr__img-wrapper {
@@ -131,8 +147,8 @@ button.entity-hovercard__a11y-trigger {
 }
 
 .update-components-header__text-wrapper .ivm-view-attr__img-wrapper--use-img-tag img.marker {
-    right: 0%;
-    bottom: 0%;
+    right: 1px;
+    bottom: 1px;
     top: auto;
 }
 
@@ -142,10 +158,15 @@ button.entity-hovercard__a11y-trigger {
 
 .comments-comment-item img.marker,
 .feed-shared-actor__image img.marker {
-    right: 0 !important;
+    right: 3px !important;
     top: auto !important;
     bottom: 0 !important;
     z-index: 0;
+}
+
+.feed-shared-avatar-image.member.comments-comment-box__avatar-image img.marker {
+    bottom: 0;
+    right: 2px;
 }
 
 .msg-s-profile-card .artdeco-entity-lockup__image,
@@ -210,6 +231,7 @@ button:has(> img.marker)~.presence-entity__indicator {
 
 article.nt-card.nt-card--redesigned.nt-card--with-hover-states img.marker {
     top: 40px;
+    right: 3px;
 }
 
 .app-aware-link.profile-rail-card__profile-link img.marker {
@@ -233,7 +255,39 @@ article.nt-card.nt-card--redesigned.nt-card--with-hover-states img.marker {
     top: auto;
 }
 
+.search-results-container .search-nec__hero-kcard-v2 img.marker {
+    right: 4px;
+    bottom: 0;
+}
 
+.search-results-container .entity-result__content-container img.marker {
+    right: 3px;
+    bottom: 0;
+}
+
+.pv-browsemap-section__member-container a {
+    position: relative;
+}
+
+.pv-browsemap-section__member-container img.marker {
+    left: 34px;
+    top: 36px;
+}
+
+
+.msg-overlay-conversation-bubble--is-active .msg-s-profile-card img.marker {
+    left: -15px !important;
+    top: 40px !important;
+}
+
+.groups-members-card img.marker {
+    right: 3px;
+}
+
+#groups .artdeco-entity-lockup__image.artdeco-entity-lockup__image--type-circle img.marker {
+    right: 15px;
+    top: 40px;
+}
 
 /*actual user marker*/
 
@@ -246,8 +300,12 @@ article.nt-card.nt-card--redesigned.nt-card--with-hover-states img.marker {
     position: relative;
 }
 
+.jobs-job-board-list__item img.marker {
+    right: 1px;
+}
+
 .artdeco-dropdown__trigger img.marker {
-    bottom: 4px;
+    bottom: 6px;
     position: relative;
     left: 8px;
     margin-bottom: -5px;
@@ -258,12 +316,80 @@ article.nt-card.nt-card--redesigned.nt-card--with-hover-states img.marker {
 }
 
 .feed-identity-module__actor-meta a>div img.marker {
-    right: calc(50% - 35px);
+    right: calc(50% - 30px);
     bottom: 2rem;
 }
 
 .share-box-feed-entry__avatar {
     position: relative;
+}
+
+.share-box-feed-entry__avatar img.marker {
+    right: 4px;
+    bottom: 0;
+}
+
+#msg-overlay .msg-overlay-bubble-header__details img.marker,
+#user-list .msg-overlay-bubble-header__details img.marker {
+    left: 22px;
+    bottom: 0;
+}
+
+#msg-overlay div.msg-overlay-list-bubble__conversations-list img.marker {
+    left: 30px;
+    bottom: 0;
+}
+
+
+
+#msg-overlay ul.msg-overlay-list-bubble-search__connection-search-result-list .msg-overlay-search-result-picture,
+#msg-overlay div.msg-overlay-list-bubble-search__content-search-result-list .presence-entity {
+    position: relative;
+}
+
+#msg-overlay div.msg-overlay-list-bubble-search__content-search-result-list img.marker {
+    left: 31px;
+    bottom: 0;
+}
+
+
+#msg-overlay ul.msg-overlay-list-bubble-search__connection-search-result-list img.marker {
+    left: 24px;
+    bottom: 0;
+}
+
+#user-list .msg-overlay-list-bubble-search__list-item img.marker {
+    left: 24px;
+    bottom: 0;
+}
+
+.pv-profile-sticky-header-v2__container img.marker {
+    right: 1px;
+    bottom: 1px;
+}
+
+.msg-s-message-list-container .msg-s-message-list__event a img.marker {
+    right: 3.5px;
+    bottom: 5px;
+}
+
+.msg-s-message-list-container .msg-s-profile-card img.marker {
+    top: 52px;
+    right: 20px !important;
+}
+
+.msg-s-message-list-container .msg-s-event-listitem__seen-receipts img.marker {
+    right: calc(0.8rem + 1px);
+}
+
+
+.msg-conversations-container__conversations-list img.marker {
+    right: 4px !important;
+}
+
+.profile-photo-edit__edit-btn img.marker {
+    right: 0;
+    bottom: 0;
 }
 
 .artdeco-dropdown__content {
@@ -281,6 +407,12 @@ article.nt-card.nt-card--redesigned.nt-card--with-hover-states img.marker {
     bottom: 0;
 }
 
+.member-analytics-addon-analytic-view .artdeco-entity-lockup__image.artdeco-entity-lockup__image--type-circle img.marker {
+    left: -18px !important;
+    right: auto;
+    position: relative;
+    bottom: 0;
+}
 
 .global-nav__content .scaffold-layout__aside .presence-entity {
     position: relative;
@@ -297,7 +429,7 @@ article.nt-card.nt-card--redesigned.nt-card--with-hover-states img.marker {
 
 .groups-identity-module__link img.marker {
     position: relative;
-    left: -20px;
+    left: -25px;
 }
 
 .job-card-list__insight .ivm-view-attr__img-wrapper {
@@ -311,6 +443,59 @@ article.nt-card.nt-card--redesigned.nt-card--with-hover-states img.marker {
 .profile-rail-card__profile-link img.marker {
     right: calc(50% - 35px);
     bottom: 1.5rem;
+}
+
+#artdeco-modal-outlet .artdeco-modal__content section {
+    position: relative;
+}
+
+#artdeco-modal-outlet .artdeco-modal__content section img.marker {
+    left: 70px;
+    top: 70px;
+}
+
+#artdeco-modal-outlet .artdeco-entity-lockup__image.artdeco-entity-lockup__image--type-circle {
+    position: relative;
+}
+
+#artdeco-modal-outlet .artdeco-entity-lockup__image.artdeco-entity-lockup__image--type-circle img.marker {
+    right: 15px;
+}
+
+#artdeco-modal-outlet div[aria-labelledby="content-admin-identity-modal"] .artdeco-entity-lockup__image img.marker {
+    right: 25px;
+}
+
+#profile-edit-form-page-content .ivm-view-attr__img-wrapper {
+    position: relative;
+}
+
+#profile-edit-form-page-content img.marker {
+    bottom: 2px;
+    position: absolute;
+    right: 2px;
+}
+
+#artdeco-modal-outlet .pvs-list__container .ivm-view-attr__img-wrapper img.marker {
+    top: 35px;
+    right: 3px;
+}
+
+
+.search-global-typeahead__history-list-carousel img.marker {
+    left: 42px;
+    bottom: 2px;
+}
+
+.feed-shared-social-action-bar__action-button button.artdeco-button span.artdeco-button__text {
+    position: relative;
+}
+
+.feed-shared-social-action-bar__action-button button.artdeco-button span.artdeco-button__text img.marker {
+    bottom: 4px;
+    height: 8px !important;
+    width: 8px !important;
+    right: 0;
 }
 
 /*.basic-typeahead__triggered-content.search-global-typeahead__content.search-global-typeahead--content-ease-in.search-global-typeahead__content--small-width img {
