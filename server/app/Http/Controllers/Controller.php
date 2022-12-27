@@ -37,7 +37,7 @@ class Controller extends BaseController
         try {
             $data = DB::table('user_info')
                 ->select(DB::raw('first_name, last_name, active, image, urn, image_id, status, linkedin_id,
-                TIMESTAMPDIFF(SECOND, updated_at, NOW()) as last_active'))
+                TIMESTAMPDIFF(SECOND, NOW(), updated_at) as last_active'))
                 ->where([['active', '=', 1], ['linkedin_id', '!=', $id]])
                 ->orderBy('status', 'DESC')
                 ->orderBy('updated_at', 'DESC')

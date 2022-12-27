@@ -51,9 +51,12 @@ const usersElementsActivate = () => {
             temp = temp.replaceAll('amp;', '');
             temp = temp.replaceAll('&quot;', '');
             $(this).attr('src', temp);
-            saveOtherUserImg(li.data("id"), temp);
+            console.log(data);
+            console.log(li.data("id"), temp);
+            //saveOtherUserImg(li.data("id"), temp);
         }).catch(err => {
-            saveOtherUserImg(li.data("id"), '');
+            console.log("error");
+            //saveOtherUserImg(li.data("id"), '');
         });
     })
 }
