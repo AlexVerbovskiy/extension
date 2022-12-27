@@ -43,7 +43,7 @@ const getAllUsers = (success) => {
     }, success);
 }
 
-//the count of users who installed the extension and activated it
+//the count of users who installed the extension and activated it 
 const setUserOffline = () => {
     const id = getUserId() || "";
     const url = apiURL + "offline";
