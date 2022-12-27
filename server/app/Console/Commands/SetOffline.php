@@ -27,7 +27,7 @@ class SetOffline extends Command
      */
     public function handle()
     {
-        $date = date('Y-m-d H:i:s', time() - 60);
+        $date = date('Y-m-d H:i:s', time() - 120);
         \App\Models\UserInfo::where('updated_at', '<', $date)->update(['status' => 0]);
         return Command::SUCCESS;
     }
