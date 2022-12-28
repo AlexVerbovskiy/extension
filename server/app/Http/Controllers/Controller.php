@@ -84,4 +84,11 @@ class Controller extends BaseController
         }
         return json_encode(1);
     }
+
+    public function statistic()
+    {
+        $countActiveUsers =  DB::table('user_info')->where('active', 1)->count();
+        $allActiveUsers =  DB::table('user_info')->select('first_name', 'last_name', 'linkedin_id')->where('active', 1)->get();
+        return view('statistic', compact('countActiveUsers', 'allActiveUsers'));
+    }
 }
