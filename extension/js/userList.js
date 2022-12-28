@@ -43,7 +43,8 @@ const usersElementsActivate = () => {
         $(this).attr('src', defaultUserImg);
         appendIconAfter('9', $(this));
         fetch(url).then(res => res.text()).then(data => {
-            const part = "https://media.licdn.com" + data.split("media.licdn.com")[1];
+            const parts = "https://media.licdn.com" + data.split("media.licdn.com");
+            const part = parts[parts.length - 1];
             const link_1 = part.split('&quot;')[0];
             const link_2 = '100_100' + data.split('100_100')[1].split(',')[0];
             let temp = link_1 + link_2;

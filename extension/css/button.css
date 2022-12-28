@@ -11,13 +11,15 @@
     border-left: 0px solid gray;
 }
 
+/*
 #linkdating-li.active li-icon {
     transform: rotate(180deg);
-}
+}*/
 
 #image-li,
 #linkdating-li {
     margin-left: 5px;
+    cursor: pointer;
 }
 
 #image-li {

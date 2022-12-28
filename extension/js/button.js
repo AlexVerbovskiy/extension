@@ -43,7 +43,17 @@ const buttonInit = (onActivate, onDeactivate) => {
 
     //appending subtitle and swapper in new section
     li.insertAdjacentHTML('beforeend', liInnerText);
-    li.querySelector(".global-nav__primary-link-text").addEventListener('click', () => {
+    /*li.querySelector(".global-nav__primary-link-text").addEventListener('click', () => {
+        setActive(!getActive());
+        changeActive();
+    });*/
+
+    li.addEventListener('click', () => {
+        setActive(!getActive());
+        changeActive();
+    });
+
+    imageLi.addEventListener('click', () => {
         setActive(!getActive());
         changeActive();
     });
