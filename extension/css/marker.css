@@ -134,8 +134,8 @@ button.entity-hovercard__a11y-trigger {
 }
 
 .artdeco-list__item.member-analytics-addon-entity-list__item .ivm-view-attr__img-wrapper img.marker {
-    right: 0%;
-    bottom: 0%;
+    right: 15px;
+    top: 35px;
 }
 
 .follows-recommendation-card__content>a {
@@ -394,10 +394,10 @@ article.nt-card.nt-card--redesigned.nt-card--with-hover-states img.marker {
 
 .profile-photo-edit__edit-btn img.marker,
 .profile-photo-edit img.marker {
-    right: 0;
-    bottom: 0;
-    height: 45px !important;
-    width: 45px !important;
+    right: 3px;
+    bottom: 5px;
+    height: 30px !important;
+    width: 30px !important;
 }
 
 .artdeco-dropdown__content {
@@ -513,3 +513,20 @@ article.nt-card.nt-card--redesigned.nt-card--with-hover-states img.marker {
     width: 200px;
     height: 200px;
 }*/
+
+
+/*https://www.linkedin.com/feed/update/urn:li:activity:6994645491862913025/?origin=SHARED_BY_YOUR_NETWORK*/
+.feed-profile-rail-card .marker {
+    bottom: 15px !important;
+    left: calc(50% + 16px);
+    height: 18px !important;
+    width: 18px !important;
+}
+
+[class*=feed-shared-update] .marker {
+    right: 2px;
+}
+
+.app-aware-link.inline-flex.align-items-center.link-without-hover-visited.pt2 .marker {
+    right: 1px;
+}

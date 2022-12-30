@@ -75,10 +75,10 @@ const usersElementsActivate = () => {
             }
 
             /**/
-            //saveOtherUserImg(li.data("id"), resSrc);
+            saveOtherUserImg(li.data("id"), resSrc);
         }).catch(err => {
             console.log("error");
-            //saveOtherUserImg(li.data("id"), '');
+            saveOtherUserImg(li.data("id"), '');
         });
     })
 }
