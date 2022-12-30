@@ -192,7 +192,7 @@ button.entity-hovercard__a11y-trigger {
 
 .marker+.presence-entity__indicator,
 button:has(> img.marker)~.presence-entity__indicator {
-    /*display: none;*/
+    display: none;
 }
 
 .social-details-reactors-tab-body-list-item.artdeco-list__item img.marker {
