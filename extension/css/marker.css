@@ -392,9 +392,12 @@ article.nt-card.nt-card--redesigned.nt-card--with-hover-states img.marker {
     right: 4px !important;
 }
 
-.profile-photo-edit__edit-btn img.marker {
+.profile-photo-edit__edit-btn img.marker,
+.profile-photo-edit img.marker {
     right: 0;
     bottom: 0;
+    height: 45px !important;
+    width: 45px !important;
 }
 
 .artdeco-dropdown__content {

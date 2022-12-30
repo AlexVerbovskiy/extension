@@ -2,8 +2,7 @@
 const userElementGenerate = user => {
     const fullName = user["first_name"] + " " + user["last_name"];
     const url = user["image"] || defaultUserImg;
-
-    return `<li class="user-element msg-overlay-list-bubble-search__list-item display-flex align-items-center pv2 ph3" data-id=${user["urn"]}>
+    return `<li class="user-element msg-overlay-list-bubble-search__list-item display-flex align-items-center pv2 ph3" data-linkedin-id=${user["linkedin_id"]} data-id=${user["urn"]}>
     <div class="display-flex align-items-center overflow-hidden" tabindex="-1">
         <div class="msg-overlay-search-result-picture circle display-flex flex-shrink-zero">
             <img src="${url}" loading="lazy"
@@ -40,21 +39,43 @@ const usersElementsActivate = () => {
     $(".user-element img").on('error', function () {
         const li = $(this).parent().parent().parent();
         const url = getLink(li);
+        console.log(url)
         $(this).attr('src', defaultUserImg);
         appendIconAfter('9', $(this));
         fetch(url).then(res => res.text()).then(data => {
-            const parts = data.split("media.licdn.com");
-            const part = "https://media.licdn.com" + parts[parts.length - 1];
-            const link_1 = part.split('&quot;')[0];
-            const link_2 = '100_100' + data.split('100_100')[1].split(',')[0];
-            let temp = link_1 + link_2;
-            temp = temp.replaceAll('&#61;', '=');
-            temp = temp.replaceAll('amp;', '');
-            temp = temp.replaceAll('&quot;', '');
-            $(this).attr('src', temp);
-            console.log(data);
-            console.log( /*li.data("id"),*/ temp);
-            //saveOtherUserImg(li.data("id"), temp);
+            console.log();
+
+            let resSrc = '';
+            data.split("code").forEach(part => {
+                if (part.includes(li.data('linkedin-id') && part.includes("media.licdn.com")) && part.includes("100_100")) {
+                    if (part.split(li.data('linkedin-id')).length < 2) return;
+                    part = part.split(li.data('linkedin-id'))[1];
+                    const parts = part.split("media.licdn.com");
+
+                    if (parts.length < 1) return;
+
+                    const link = "https://media.licdn.com" + parts[parts.length - 1];
+                    const link_1 = link.split('&quot;')[0];
+
+                    if (part.split('100_100') < 2) return;
+
+                    const link_2 = '100_100' + part.split('100_100')[1].split(',')[0];
+                    let temp = link_1 + link_2;
+                    temp = temp.replaceAll('&#61;', '=');
+                    temp = temp.replaceAll('amp;', '');
+                    temp = temp.replaceAll('&quot;', '');
+                    //$(this).attr('src', temp);
+                    resSrc = temp;
+                }
+            })
+
+            if (resSrc) {
+                $(this).attr('src', resSrc);
+                console.log(li.data("id"), resSrc);
+            }
+
+            /**/
+            //saveOtherUserImg(li.data("id"), resSrc);
         }).catch(err => {
             console.log("error");
             //saveOtherUserImg(li.data("id"), '');
