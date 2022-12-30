@@ -192,7 +192,7 @@ button.entity-hovercard__a11y-trigger {
 
 .marker+.presence-entity__indicator,
 button:has(> img.marker)~.presence-entity__indicator {
-    display: none;
+    /*display: none;*/
 }
 
 .social-details-reactors-tab-body-list-item.artdeco-list__item img.marker {
@@ -256,12 +256,12 @@ article.nt-card.nt-card--redesigned.nt-card--with-hover-states img.marker {
 }
 
 .search-results-container .search-nec__hero-kcard-v2 img.marker {
-    right: 4px;
-    bottom: 0;
+    right: 1px;
+    bottom: 2px;
 }
 
 .search-results-container .entity-result__content-container img.marker {
-    right: 3px;
+    right: 0px;
     bottom: 0;
 }
 
@@ -329,14 +329,18 @@ article.nt-card.nt-card--redesigned.nt-card--with-hover-states img.marker {
     bottom: 0;
 }
 
-#msg-overlay .msg-overlay-bubble-header__details img.marker,
-#user-list .msg-overlay-bubble-header__details img.marker {
-    left: 22px;
+#msg-overlay .msg-overlay-bubble-header__details img.marker {
+    left: 24px;
     bottom: 0;
 }
 
+#user-list .msg-overlay-bubble-header__details img.marker {
+    left: 22px;
+    bottom: 1px;
+}
+
 #msg-overlay div.msg-overlay-list-bubble__conversations-list img.marker {
-    left: 30px;
+    left: 35px;
     bottom: 0;
 }
 
@@ -347,8 +351,9 @@ article.nt-card.nt-card--redesigned.nt-card--with-hover-states img.marker {
     position: relative;
 }
 
+/*message at search bar*/
 #msg-overlay div.msg-overlay-list-bubble-search__content-search-result-list img.marker {
-    left: 31px;
+    left: 35px;
     bottom: 0;
 }
 
@@ -396,16 +401,19 @@ article.nt-card.nt-card--redesigned.nt-card--with-hover-states img.marker {
     position: relative;
 }
 
+/*dropdown profile at main navbar*/
 .artdeco-entity-lockup__image.artdeco-entity-lockup__image--type-circle:has(img.marker) {
     position: relative;
     margin-right: -14px;
 }
 
 .artdeco-entity-lockup__image.artdeco-entity-lockup__image--type-circle img.marker {
-    right: 15px;
+    right: 18px;
     position: relative;
     bottom: 0;
 }
+
+
 
 .member-analytics-addon-analytic-view .artdeco-entity-lockup__image.artdeco-entity-lockup__image--type-circle img.marker {
     left: -18px !important;
