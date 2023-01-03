@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
 
 class SetOffline extends Command
 {
@@ -28,7 +29,7 @@ class SetOffline extends Command
     public function handle()
     {
         $date = date('Y-m-d H:i:s', time() - 120);
-        \App\Models\UserInfo::where([
+        DB::table('user_info')->where([
             ['updated_at', '<', $date],
             ['status', '=', 1]
         ])->update(['status' => 0]);
